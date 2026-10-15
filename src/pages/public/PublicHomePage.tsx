@@ -3,12 +3,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/layout/PublicNavbar';
 import { PublicFooter } from '../../components/layout/PublicFooter';
 import { storage } from '../../services/storage';
-import { 
-  Search, 
-  QrCode, 
-  ShieldCheck, 
-  ArrowRight, 
-  FileText, 
+import {
+  Search,
+  QrCode,
+  ShieldCheck,
+  ArrowRight,
+  FileText,
   ChevronRight,
   ShieldAlert,
   Clock
@@ -44,10 +44,10 @@ export const PublicHomePage: React.FC = () => {
             />
           </div>
 
-          <div className="inline-flex items-center gap-2 bg-slate-800/80 border border-slate-700 px-3 py-1 rounded-full text-xs text-slate-300">
+          {/* <div className="inline-flex items-center gap-2 bg-slate-800/80 border border-slate-700 px-3 py-1 rounded-full text-xs text-slate-300">
             <ShieldCheck className="w-3.5 h-3.5 text-slate-300" />
             <span>ระบบตรวจสอบฉลากดิจิทัล สำนักงานคณะกรรมการอาหารและยา</span>
-          </div>
+          </div> */}
 
           <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
             ตรวจสอบข้อมูลฉลากผลิตภัณฑ์สุขภาพ อย.

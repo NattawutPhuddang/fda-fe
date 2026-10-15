@@ -3,15 +3,15 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { UserRole } from '../../services/types';
-import { 
-  ShieldCheck, 
-  UserCheck, 
-  Lock, 
-  ArrowRight, 
-  AlertCircle, 
-  Building2, 
-  Briefcase, 
-  ShieldAlert, 
+import {
+  ShieldCheck,
+  UserCheck,
+  Lock,
+  ArrowRight,
+  AlertCircle,
+  Building2,
+  Briefcase,
+  ShieldAlert,
   Info
 } from 'lucide-react';
 
@@ -95,22 +95,20 @@ export const LoginPage: React.FC = () => {
         <div className="flex border-b border-slate-200 bg-slate-50 text-xs sm:text-sm font-semibold">
           <button
             onClick={() => setActiveTab('demo')}
-            className={`flex-1 py-3 transition border-b-2 flex items-center justify-center gap-1.5 ${
-              activeTab === 'demo'
-                ? 'border-[#002B49] text-[#002B49] bg-white'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className={`flex-1 py-3 transition border-b-2 flex items-center justify-center gap-1.5 ${activeTab === 'demo'
+              ? 'border-[#002B49] text-[#002B49] bg-white'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
           >
             <UserCheck className="w-4 h-4 text-slate-600" />
             <span>ทดสอบระบบ (Demo Personas)</span>
           </button>
           <button
             onClick={() => setActiveTab('official')}
-            className={`flex-1 py-3 transition border-b-2 flex items-center justify-center gap-1.5 ${
-              activeTab === 'official'
-                ? 'border-[#002B49] text-[#002B49] bg-white'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className={`flex-1 py-3 transition border-b-2 flex items-center justify-center gap-1.5 ${activeTab === 'official'
+              ? 'border-[#002B49] text-[#002B49] bg-white'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
           >
             <Lock className="w-4 h-4 text-slate-600" />
             <span>เข้าสู่ระบบทางการ (ThaID)</span>
