@@ -98,8 +98,12 @@ export const PDFViewerModal: React.FC<PDFViewerModalProps> = ({
             <div>
               <div className="flex items-center justify-between border-b pb-4 mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[#002B49] text-white flex items-center justify-center font-bold text-xs border border-slate-300">
-                    อย. FDA
+                  <div className="w-14 h-14 flex items-center justify-center flex-shrink-0">
+                    <img
+                      src="/Logo_of_the_Food_and_Drug_Administration.svg"
+                      alt="อย. FDA Thailand"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                   <div>
                     <h4 className="font-bold text-base text-slate-900">สำนักงานคณะกรรมการอาหารและยา</h4>

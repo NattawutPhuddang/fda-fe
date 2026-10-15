@@ -54,9 +54,11 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
         </button>
 
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#002B49] text-white flex items-center justify-center font-bold text-xs tracking-tight">
-            อย.
-          </div>
+          <img
+            src="/Logo_of_the_Food_and_Drug_Administration.svg"
+            alt="โลโก้ อย. สำนักงานคณะกรรมการอาหารและยา"
+            className="w-8 h-8 object-contain"
+          />
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-slate-900 text-sm leading-tight">

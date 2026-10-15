@@ -34,8 +34,16 @@ export const PublicHomePage: React.FC = () => {
       <PublicNavbar lang={lang} onToggleLang={() => setLang(l => l === 'th' ? 'en' : 'th')} />
 
       {/* Hero Section */}
-      <section className="bg-[#002B49] text-white py-14 sm:py-18 px-4 border-b border-slate-800">
-        <div className="max-w-4xl mx-auto text-center space-y-5">
+      <section className="bg-[#002B49] text-white py-12 sm:py-16 px-4 border-b border-slate-800">
+        <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-2 shadow-md flex items-center justify-center">
+            <img
+              src="/Logo_of_the_Food_and_Drug_Administration.svg"
+              alt="สำนักงานคณะกรรมการอาหารและยา (อย.)"
+              className="w-full h-full object-contain"
+            />
+          </div>
+
           <div className="inline-flex items-center gap-2 bg-slate-800/80 border border-slate-700 px-3 py-1 rounded-full text-xs text-slate-300">
             <ShieldCheck className="w-3.5 h-3.5 text-slate-300" />
             <span>ระบบตรวจสอบฉลากดิจิทัล สำนักงานคณะกรรมการอาหารและยา</span>

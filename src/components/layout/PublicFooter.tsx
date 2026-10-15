@@ -8,8 +8,12 @@ export const PublicFooter: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <div className="flex items-center gap-2.5 mb-3 text-white font-bold text-base">
-            <div className="w-8 h-8 rounded-lg bg-blue-700 text-amber-400 flex items-center justify-center text-xs">
-              อย.
+            <div className="w-8 h-8 rounded-lg bg-white p-1 flex items-center justify-center flex-shrink-0">
+              <img
+                src="/Logo_of_the_Food_and_Drug_Administration.svg"
+                alt="อย."
+                className="w-full h-full object-contain"
+              />
             </div>
             <span>สำนักงานคณะกรรมการอาหารและยา</span>
           </div>

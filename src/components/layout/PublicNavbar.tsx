@@ -13,9 +13,11 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ lang = 'th', onToggl
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo & Agency Name */}
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-[#002B49] text-white flex items-center justify-center font-bold text-sm tracking-tight">
-            อย.
-          </div>
+          <img
+            src="/Logo_of_the_Food_and_Drug_Administration.svg"
+            alt="โลโก้ อย. สำนักงานคณะกรรมการอาหารและยา"
+            className="w-10 h-10 object-contain"
+          />
           <div>
             <h1 className="font-bold text-slate-900 text-sm sm:text-base leading-tight">
               ฉลากดิจิทัล อย.

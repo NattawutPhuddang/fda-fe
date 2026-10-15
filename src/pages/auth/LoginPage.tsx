@@ -54,9 +54,11 @@ export const LoginPage: React.FC = () => {
       {/* Top Header */}
       <div className="max-w-6xl w-full mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-[#002B49] text-white flex items-center justify-center font-bold text-xs tracking-tight border border-slate-700">
-            อย.
-          </div>
+          <img
+            src="/Logo_of_the_Food_and_Drug_Administration.svg"
+            alt="โลโก้ อย."
+            className="w-10 h-10 object-contain bg-white rounded-full p-0.5"
+          />
           <div>
             <h1 className="font-bold text-white text-sm sm:text-base leading-tight">ระบบฉลากดิจิทัล อย.</h1>
             <p className="text-[11px] text-slate-400">สำนักงานคณะกรรมการอาหารและยา กระทรวงสาธารณสุข</p>
@@ -76,8 +78,12 @@ export const LoginPage: React.FC = () => {
       <div className="max-w-lg w-full mx-auto my-8 bg-white text-slate-800 rounded-2xl shadow-xl overflow-hidden border border-slate-200">
         {/* Banner */}
         <div className="bg-[#002B49] text-white p-6 text-center">
-          <div className="w-12 h-12 rounded-xl bg-white/10 mx-auto flex items-center justify-center mb-2.5">
-            <ShieldCheck className="w-6 h-6 text-slate-200" />
+          <div className="w-14 h-14 rounded-full bg-white mx-auto flex items-center justify-center p-2 mb-2.5 shadow-md">
+            <img
+              src="/Logo_of_the_Food_and_Drug_Administration.svg"
+              alt="อย. FDA Thailand"
+              className="w-full h-full object-contain"
+            />
           </div>
           <h2 className="text-xl font-bold">เข้าสู่ระบบบริการฉลากดิจิทัล</h2>
           <p className="text-xs text-slate-300 mt-0.5">
