@@ -1,0 +1,163 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Thai FDA Digital Labeling Platform API",
+    "description": "ระบบจัดการฉลากดิจิทัล สำนักงานคณะกรรมการอาหารและยา (อย.) - RESTful Web API Spec for ASP.NET Core Target Backend",
+    "version": "1.0.0",
+    "contact": {
+      "name": "ศูนย์เทคโนโลยีสารสนเทศและการสื่อสาร (ศทส. อย.)",
+      "email": "itc@fda.moph.go.th"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://digital-label.fda.moph.go.th/api",
+      "description": "Production GDCC Cloud API Gateway"
+    },
+    {
+      "url": "http://localhost:5000/api",
+      "description": "Local ASP.NET Core Development Server"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Authenticate user via ThaID OAuth2 / SKYNET SSO / Demo credentials",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": { "type": "string", "enum": ["THAID", "SKYNET", "DEMO"] },
+                  "tokenOrCode": { "type": "string" },
+                  "role": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "JWT Bearer Token issued successfully" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "List products with search and category filters",
+        "tags": ["Products"],
+        "parameters": [
+          { "name": "query", "in": "query", "schema": { "type": "string" } },
+          { "name": "category", "in": "query", "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "pageSize", "in": "query", "schema": { "type": "integer", "default": 20 } }
+        ],
+        "responses": {
+          "200": { "description": "Paged list of registered products" }
+        }
+      }
+    },
+    "/products/{newcode}/verify": {
+      "get": {
+        "summary": "Public verification endpoint for citizen QR Code scans",
+        "tags": ["Public Verification"],
+        "parameters": [
+          { "name": "newcode", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Returns official approved digital label payload" },
+          "404": { "description": "Product not found or not published" },
+          "423": { "description": "Product label is temporarily suspended by Thai FDA" }
+        }
+      }
+    },
+    "/digital-labels": {
+      "post": {
+        "summary": "Create new digital label draft",
+        "tags": ["Digital Labels"],
+        "responses": {
+          "201": { "description": "Draft label created" }
+        }
+      }
+    },
+    "/digital-labels/{id}": {
+      "get": {
+        "summary": "Get label by ID",
+        "tags": ["Digital Labels"],
+        "responses": { "200": { "description": "Label details" } }
+      },
+      "put": {
+        "summary": "Update label draft",
+        "tags": ["Digital Labels"],
+        "responses": { "200": { "description": "Label updated" } }
+      }
+    },
+    "/digital-labels/{id}/submit": {
+      "post": {
+        "summary": "Submit digital label to FDA Officer queue",
+        "tags": ["Digital Labels"],
+        "responses": { "200": { "description": "Submitted to queue" } }
+      }
+    },
+    "/reviews/{id}/decision": {
+      "post": {
+        "summary": "Officer decision: Approve, Request Revision, Reject, or Suspend",
+        "tags": ["Officer Reviews"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": { "type": "string", "enum": ["APPROVE", "REQUEST_REVISION", "REJECT", "SUSPEND"] },
+                  "notes": { "type": "string" },
+                  "checklist": { "type": "array", "items": { "type": "object" } }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Decision saved and audit logged" } }
+      }
+    },
+    "/qrcodes/{newcode}": {
+      "get": {
+        "summary": "Generate or retrieve packaging QR Code SVG and high-res PNG",
+        "tags": ["QR Codes"],
+        "responses": { "200": { "description": "QR Code vector and raster files" } }
+      }
+    },
+    "/analytics/scans": {
+      "get": {
+        "summary": "Get aggregated QR scan analytics and trends",
+        "tags": ["Analytics"],
+        "responses": { "200": { "description": "Analytics payload" } }
+      }
+    },
+    "/reports/export": {
+      "get": {
+        "summary": "Export official reports in CSV or XLSX format",
+        "tags": ["Reports"],
+        "responses": { "200": { "description": "Binary file download" } }
+      }
+    },
+    "/audit-logs": {
+      "get": {
+        "summary": "Retrieve immutable system audit logs (Admin & Auditor only)",
+        "tags": ["Audit Logs"],
+        "responses": { "200": { "description": "List of audit logs" } }
+      }
+    },
+    "/integrations": {
+      "get": {
+        "summary": "Get external integration statuses (ThaID, SKYNET, SQL Server, GDCC)",
+        "tags": ["Integrations"],
+        "responses": { "200": { "description": "Integration configurations" } }
+      }
+    }
+  }
+}
