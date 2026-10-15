@@ -80,7 +80,7 @@ export const PDFViewerModal: React.FC<PDFViewerModalProps> = ({
             </button>
             <button
               onClick={() => alert(`ดาวน์โหลดเอกสาร: ${documentName}`)}
-              className="p-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded transition flex items-center gap-1 text-xs px-2.5"
+              className="p-1.5 bg-[#002B49] hover:bg-[#001D33] text-white rounded transition flex items-center gap-1 text-xs px-2.5"
             >
               <Download className="w-4 h-4" />
               <span>ดาวน์โหลด PDF</span>
@@ -98,17 +98,17 @@ export const PDFViewerModal: React.FC<PDFViewerModalProps> = ({
             <div>
               <div className="flex items-center justify-between border-b pb-4 mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-blue-900 text-amber-400 flex items-center justify-center font-bold text-xs border border-amber-400">
+                  <div className="w-12 h-12 rounded-full bg-[#002B49] text-white flex items-center justify-center font-bold text-xs border border-slate-300">
                     อย. FDA
                   </div>
                   <div>
-                    <h4 className="font-bold text-base text-blue-950">สำนักงานคณะกรรมการอาหารและยา</h4>
+                    <h4 className="font-bold text-base text-slate-900">สำนักงานคณะกรรมการอาหารและยา</h4>
                     <p className="text-xs text-slate-500">กระทรวงสาธารณสุข — Food and Drug Administration, Thailand</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 px-2 py-1 rounded border border-emerald-200 font-medium">
-                    <CheckCircle className="w-3.5 h-3.5" /> ตรวจสอบแล้วผ่านระบบอิเล็กทรอนิกส์
+                  <span className="inline-flex items-center gap-1 text-xs text-slate-800 bg-slate-100 px-2 py-1 rounded border border-slate-300 font-medium">
+                    <CheckCircle className="w-3.5 h-3.5 text-slate-700" /> ตรวจสอบแล้วผ่านระบบอิเล็กทรอนิกส์
                   </span>
                   <p className="text-[10px] text-slate-400 mt-1">e-Document Ref: MOPH-FDA-2026-9812</p>
                 </div>
@@ -160,7 +160,7 @@ export const PDFViewerModal: React.FC<PDFViewerModalProps> = ({
 
                   <div>
                     <h5 className="font-bold text-slate-900 mb-1">3. คำเตือนและข้อกำหนดทางกฎหมาย</h5>
-                    <div className="border border-amber-300 bg-amber-50/50 p-3 rounded text-amber-950 font-medium">
+                    <div className="border border-slate-200 bg-slate-50 p-3 rounded text-slate-800 font-medium">
                       คำเตือน: เขย่าขวดก่อนดื่ม เมื่อเปิดฝาแล้วควรดื่มให้หมดทันทีหรือเก็บในตู้เย็นและดื่มให้หมดภายใน 24 ชั่วโมง ผู้ที่มีประวัติแพ้รังนกหรือโสมควรปรึกษาแพทย์ก่อนรับประทาน
                     </div>
                   </div>

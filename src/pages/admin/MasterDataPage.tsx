@@ -105,7 +105,7 @@ export const MasterDataPage: React.FC = () => {
                   <td className="py-3.5 px-4 text-slate-500 italic">{c.nameEn}</td>
                   <td className="py-3.5 px-4 font-mono">{c.prefix}XXXXX...</td>
                   <td className="py-3.5 px-4">
-                    <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-semibold text-slate-700 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
                       {c.status}
                     </span>
                   </td>

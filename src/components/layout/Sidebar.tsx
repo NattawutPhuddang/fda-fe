@@ -108,7 +108,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 className={({ isActive }) =>
                   `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all ${
                     isActive
-                      ? 'bg-blue-800 text-white shadow-md font-semibold'
+                      ? 'bg-[#002B49] text-white shadow-xs font-semibold'
                       : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/70'
                   }`
                 }
@@ -152,7 +152,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="p-4 border-t border-slate-800 text-[11px] text-slate-400 bg-slate-950/60">
           <div className="flex items-center justify-between">
             <span>สภาพแวดล้อม:</span>
-            <span className="text-amber-400 font-medium">Demo Mode</span>
+            <span className="text-slate-300 font-medium font-mono text-[10px] bg-slate-800 px-2 py-0.5 rounded">DEMO</span>
           </div>
           <div className="flex items-center justify-between mt-1">
             <span>ผู้ใช้งานปัจจุบัน:</span>

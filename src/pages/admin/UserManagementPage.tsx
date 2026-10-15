@@ -196,7 +196,7 @@ export const UserManagementPage: React.FC = () => {
                 <tr key={u.id} className="hover:bg-slate-50/80 transition">
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-900 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-xs flex-shrink-0">
                         {u.fullName.charAt(0)}
                       </div>
                       <div>

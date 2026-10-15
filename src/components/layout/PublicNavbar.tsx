@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Search, ShieldCheck, PhoneCall, LogIn, Globe } from 'lucide-react';
+import { Search, PhoneCall, LogIn, Globe } from 'lucide-react';
 
 interface PublicNavbarProps {
   lang?: 'th' | 'en';
@@ -9,15 +9,15 @@ interface PublicNavbarProps {
 
 export const PublicNavbar: React.FC<PublicNavbarProps> = ({ lang = 'th', onToggleLang }) => {
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo & Agency Name */}
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#002B49] to-[#005A9C] text-amber-400 flex items-center justify-center font-bold text-sm shadow-sm border border-amber-400/40">
+        <Link to="/" className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-[#002B49] text-white flex items-center justify-center font-bold text-sm tracking-tight">
             อย.
           </div>
           <div>
-            <h1 className="font-bold text-slate-900 text-sm sm:text-base leading-tight group-hover:text-blue-900 transition">
+            <h1 className="font-bold text-slate-900 text-sm sm:text-base leading-tight">
               ฉลากดิจิทัล อย.
             </h1>
             <p className="text-[10px] sm:text-[11px] text-slate-500 leading-none mt-0.5">
@@ -31,20 +31,20 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ lang = 'th', onToggl
           {/* Hotline 1556 badge */}
           <a
             href="tel:1556"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1.5 rounded-full hover:bg-rose-100 transition font-medium"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-1.5 rounded-lg transition font-medium"
             title="โทรสายด่วน อย. 1556"
           >
-            <PhoneCall className="w-3.5 h-3.5" />
-            <span>สายด่วน 1556</span>
+            <PhoneCall className="w-3.5 h-3.5 text-slate-500" />
+            <span>สายด่วน อย. 1556</span>
           </a>
 
           {/* Search link */}
           <Link
             to="/search"
-            className="p-2 text-slate-600 hover:text-blue-900 hover:bg-slate-100 rounded-xl transition flex items-center gap-1.5 text-xs"
+            className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition flex items-center gap-1.5 text-xs"
             title="ค้นหาข้อมูลฉลาก"
           >
-            <Search className="w-4 h-4 text-blue-900" />
+            <Search className="w-4 h-4 text-slate-600" />
             <span className="hidden md:inline font-medium">ค้นหาฉลาก</span>
           </Link>
 
@@ -52,7 +52,7 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ lang = 'th', onToggl
           {onToggleLang && (
             <button
               onClick={onToggleLang}
-              className="px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 border border-slate-200 rounded-xl transition flex items-center gap-1"
+              className="px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 border border-slate-200 rounded-lg transition flex items-center gap-1"
             >
               <Globe className="w-3.5 h-3.5 text-slate-500" />
               <span>{lang === 'th' ? 'EN' : 'TH'}</span>
@@ -62,7 +62,7 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ lang = 'th', onToggl
           {/* Portal Login */}
           <Link
             to="/login"
-            className="px-3.5 py-1.5 bg-blue-900 hover:bg-blue-950 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-1.5"
+            className="px-3.5 py-2 bg-[#002B49] hover:bg-[#001D33] text-white rounded-lg text-xs font-semibold transition flex items-center gap-1.5"
           >
             <LogIn className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">เข้าระบบเจ้าหน้าที่ / ผู้ประกอบการ</span>

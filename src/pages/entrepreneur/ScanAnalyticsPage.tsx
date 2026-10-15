@@ -48,16 +48,16 @@ export const ScanAnalyticsPage: React.FC = () => {
   // Device Breakdown
   const deviceData = [
     { name: 'สมาร์ตโฟน (Mobile)', value: 82, color: '#002B49' },
-    { name: 'แท็บเล็ต (Tablet)', value: 12, color: '#005A9C' },
-    { name: 'คอมพิวเตอร์ (Desktop)', value: 6, color: '#38bdf8' }
+    { name: 'แท็บเล็ต (Tablet)', value: 12, color: '#334155' },
+    { name: 'คอมพิวเตอร์ (Desktop)', value: 6, color: '#64748B' }
   ];
 
   // Browser Breakdown
   const browserData = [
-    { name: 'Safari (iOS)', value: 54, color: '#0d9488' },
-    { name: 'Chrome Mobile', value: 36, color: '#0284c7' },
-    { name: 'LINE In-App Browser', value: 8, color: '#10b981' },
-    { name: 'อื่นๆ', value: 2, color: '#94a3b8' }
+    { name: 'Safari (iOS)', value: 54, color: '#002B49' },
+    { name: 'Chrome Mobile', value: 36, color: '#334155' },
+    { name: 'LINE In-App Browser', value: 8, color: '#64748B' },
+    { name: 'อื่นๆ', value: 2, color: '#94A3B8' }
   ];
 
   // Region breakdown
@@ -122,7 +122,7 @@ export const ScanAnalyticsPage: React.FC = () => {
           </button>
           <button
             onClick={handleExportExcel}
-            className="px-3 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1.5"
+            className="px-3 py-2 bg-[#002B49] hover:bg-[#001D33] text-white text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1.5"
           >
             <FileSpreadsheet className="w-3.5 h-3.5" />
             <span>ส่งออก Excel (.xlsx)</span>

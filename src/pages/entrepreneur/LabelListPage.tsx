@@ -163,7 +163,7 @@ export const LabelListPage: React.FC = () => {
                         {lbl.status === 'approved' && (
                           <button
                             onClick={() => setLabelToPublish(lbl)}
-                            className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-xs transition flex items-center gap-1"
+                            className="px-2.5 py-1 bg-[#002B49] hover:bg-[#001D33] text-white rounded-lg text-xs font-semibold shadow-xs transition flex items-center gap-1"
                             title="กดเพื่อเผยแพร่ฉลากสู่สาธารณะ"
                           >
                             <Globe className="w-3.5 h-3.5" />
@@ -174,7 +174,7 @@ export const LabelListPage: React.FC = () => {
                         {/* Edit Button */}
                         <Link
                           to={`/entrepreneur/labels/${lbl.id}/edit`}
-                          className="p-1.5 text-blue-700 hover:text-blue-950 hover:bg-blue-50 rounded-lg transition"
+                          className="p-1.5 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
                           title="แก้ไขรายละเอียดฉลาก"
                         >
                           <FileEdit className="w-4 h-4" />
@@ -184,7 +184,7 @@ export const LabelListPage: React.FC = () => {
                         {prod && (
                           <button
                             onClick={() => setSelectedForQR({ product: prod, label: lbl })}
-                            className="p-1.5 text-purple-700 hover:text-purple-950 hover:bg-purple-50 rounded-lg transition"
+                            className="p-1.5 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
                             title="จัดการและดาวน์โหลด QR Code"
                           >
                             <QrCode className="w-4 h-4" />

@@ -23,18 +23,18 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   cancelText = 'ยกเลิก',
   variant = 'primary'
 }) => {
-  let icon = <AlertCircle className="w-6 h-6 text-blue-600" />;
-  let btnClass = 'bg-blue-600 hover:bg-blue-700 text-white';
+  let icon = <AlertCircle className="w-6 h-6 text-slate-800" />;
+  let btnClass = 'bg-[#002B49] hover:bg-[#001D33] text-white';
 
   if (variant === 'danger') {
     icon = <AlertTriangle className="w-6 h-6 text-rose-600" />;
-    btnClass = 'bg-rose-600 hover:bg-rose-700 text-white';
+    btnClass = 'bg-rose-700 hover:bg-rose-800 text-white';
   } else if (variant === 'warning') {
-    icon = <AlertTriangle className="w-6 h-6 text-amber-600" />;
-    btnClass = 'bg-amber-600 hover:bg-amber-700 text-white';
+    icon = <AlertTriangle className="w-6 h-6 text-slate-700" />;
+    btnClass = 'bg-slate-800 hover:bg-slate-900 text-white';
   } else if (variant === 'success') {
-    icon = <CheckCircle2 className="w-6 h-6 text-emerald-600" />;
-    btnClass = 'bg-emerald-600 hover:bg-emerald-700 text-white';
+    icon = <CheckCircle2 className="w-6 h-6 text-[#002B49]" />;
+    btnClass = 'bg-[#002B49] hover:bg-[#001D33] text-white';
   }
 
   return (

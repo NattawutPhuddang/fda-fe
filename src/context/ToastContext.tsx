@@ -51,13 +51,13 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
           let icon = <Info className="w-5 h-5 text-blue-600 flex-shrink-0" />;
 
           if (toast.type === 'success') {
-            bg = 'bg-emerald-50 border-emerald-200 text-emerald-900';
-            icon = <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />;
+            bg = 'bg-white border-slate-200 text-slate-800 shadow-lg';
+            icon = <CheckCircle2 className="w-5 h-5 text-[#002B49] flex-shrink-0" />;
           } else if (toast.type === 'error') {
-            bg = 'bg-rose-50 border-rose-200 text-rose-900';
+            bg = 'bg-white border-rose-200 text-slate-800 shadow-lg';
             icon = <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />;
           } else if (toast.type === 'warning') {
-            bg = 'bg-amber-50 border-amber-200 text-amber-900';
+            bg = 'bg-white border-slate-200 text-slate-800 shadow-lg';
             icon = <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0" />;
           }
 

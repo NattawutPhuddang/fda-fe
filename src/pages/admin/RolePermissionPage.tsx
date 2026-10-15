@@ -59,9 +59,9 @@ export const RolePermissionPage: React.FC = () => {
       </div>
 
       {/* Security Guardrail Card */}
-      <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 text-xs space-y-1.5 shadow-sm">
-        <div className="flex items-center gap-2 font-bold text-amber-900 text-sm">
-          <ShieldAlert className="w-4 h-4 text-amber-600" />
+      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-700 text-xs space-y-1.5 shadow-xs">
+        <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
+          <ShieldAlert className="w-4 h-4 text-slate-600" />
           <span>การบังคับใช้สิทธิ์แบบ Dual-Enforcement (Frontend & Target ASP.NET Core API):</span>
         </div>
         <p className="leading-relaxed">
@@ -96,7 +96,7 @@ export const RolePermissionPage: React.FC = () => {
                     <button
                       onClick={() => handleToggle(idx, 'public')}
                       className={`w-6 h-6 rounded-lg inline-flex items-center justify-center transition ${
-                        row.public ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'
+                        row.public ? 'bg-[#002B49] text-white shadow-xs' : 'bg-slate-100 text-slate-300'
                       }`}
                     >
                       {row.public ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
@@ -108,7 +108,7 @@ export const RolePermissionPage: React.FC = () => {
                     <button
                       onClick={() => handleToggle(idx, 'entrepreneur')}
                       className={`w-6 h-6 rounded-lg inline-flex items-center justify-center transition ${
-                        row.entrepreneur ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'
+                        row.entrepreneur ? 'bg-[#002B49] text-white shadow-xs' : 'bg-slate-100 text-slate-300'
                       }`}
                     >
                       {row.entrepreneur ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
@@ -120,7 +120,7 @@ export const RolePermissionPage: React.FC = () => {
                     <button
                       onClick={() => handleToggle(idx, 'officer')}
                       className={`w-6 h-6 rounded-lg inline-flex items-center justify-center transition ${
-                        row.officer ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'
+                        row.officer ? 'bg-[#002B49] text-white shadow-xs' : 'bg-slate-100 text-slate-300'
                       }`}
                     >
                       {row.officer ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
@@ -132,7 +132,7 @@ export const RolePermissionPage: React.FC = () => {
                     <button
                       onClick={() => handleToggle(idx, 'admin')}
                       className={`w-6 h-6 rounded-lg inline-flex items-center justify-center transition ${
-                        row.admin ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-400'
+                        row.admin ? 'bg-[#002B49] text-white shadow-xs' : 'bg-slate-100 text-slate-300'
                       }`}
                     >
                       {row.admin ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
@@ -144,7 +144,7 @@ export const RolePermissionPage: React.FC = () => {
                     <button
                       onClick={() => handleToggle(idx, 'auditor')}
                       className={`w-6 h-6 rounded-lg inline-flex items-center justify-center transition ${
-                        row.auditor ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'
+                        row.auditor ? 'bg-[#002B49] text-white shadow-xs' : 'bg-slate-100 text-slate-300'
                       }`}
                     >
                       {row.auditor ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}

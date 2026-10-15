@@ -27,7 +27,7 @@ export const PrivacyNoticePage: React.FC = () => {
           <div className="space-y-6 text-xs sm:text-sm text-slate-700 leading-relaxed">
             <section className="space-y-2">
               <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <CheckCircle2 className="w-4 h-4 text-slate-700" />
                 1. วัตถุประสงค์ของการประมวลผลข้อมูล
               </h3>
               <p>
@@ -37,7 +37,7 @@ export const PrivacyNoticePage: React.FC = () => {
 
             <section className="space-y-2">
               <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
-                <Lock className="w-4 h-4 text-emerald-600" />
+                <Lock className="w-4 h-4 text-slate-700" />
                 2. ข้อมูลที่มีการจัดเก็บตามหลัก Data Minimization (เก็บเท่าที่จำเป็น)
               </h3>
               <ul className="list-disc list-inside space-y-1.5 pl-2 text-slate-600">
@@ -48,7 +48,7 @@ export const PrivacyNoticePage: React.FC = () => {
 
             <section className="space-y-2">
               <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
-                <Eye className="w-4 h-4 text-emerald-600" />
+                <Eye className="w-4 h-4 text-slate-700" />
                 3. ระยะเวลาการเก็บรักษาข้อมูล (Data Retention)
               </h3>
               <p>
@@ -58,7 +58,7 @@ export const PrivacyNoticePage: React.FC = () => {
 
             <section className="space-y-2">
               <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
-                <FileText className="w-4 h-4 text-emerald-600" />
+                <FileText className="w-4 h-4 text-slate-700" />
                 4. สิทธิของเจ้าของข้อมูลส่วนบุคคล (Data Subject Rights)
               </h3>
               <p>

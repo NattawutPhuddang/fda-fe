@@ -66,8 +66,8 @@ export const QRModal: React.FC<QRModalProps> = ({ isOpen, onClose, product, labe
       <div className="space-y-6">
         {/* Status Guardrail Alert */}
         {!isPublished ? (
-          <div className="p-4 rounded-xl border border-amber-300 bg-amber-50 text-amber-900 flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-slate-600 flex-shrink-0 mt-0.5" />
             <div className="text-xs leading-relaxed">
               <strong className="font-semibold block mb-0.5">ข้อกำหนดความปลอดภัย อย.:</strong>
               ผลิตภัณฑ์นี้ยังไม่ได้อยู่ในสถานะ <strong>"เผยแพร่แล้ว (Published)"</strong> (สถานะปัจจุบัน: {label?.status || product.activeLabelStatus || 'ร่าง'}).
@@ -75,8 +75,8 @@ export const QRModal: React.FC<QRModalProps> = ({ isOpen, onClose, product, labe
             </div>
           </div>
         ) : (
-          <div className="p-3 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-900 flex items-center gap-2.5 text-xs">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          <div className="p-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 flex items-center gap-2.5 text-xs">
+            <ShieldCheck className="w-4 h-4 text-slate-700 flex-shrink-0" />
             <span>QR Code นี้พร้อมใช้งานบนบรรจุภัณฑ์จริง ลิงก์ตรงสู่ฐานข้อมูลฉลากสาธารณะ อย.</span>
           </div>
         )}
@@ -187,7 +187,7 @@ export const QRModal: React.FC<QRModalProps> = ({ isOpen, onClose, product, labe
 
             <button
               onClick={handleDownloadSvg}
-              className="px-3.5 py-2 text-xs font-medium text-blue-900 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-xl transition inline-flex items-center gap-1.5"
+              className="px-3.5 py-2 text-xs font-medium text-slate-800 bg-white border border-slate-300 hover:bg-slate-100 rounded-xl transition inline-flex items-center gap-1.5"
             >
               <Download className="w-3.5 h-3.5" />
               <span>ดาวน์โหลด Vector SVG</span>
@@ -195,7 +195,7 @@ export const QRModal: React.FC<QRModalProps> = ({ isOpen, onClose, product, labe
 
             <button
               onClick={handleDownloadPng}
-              className="px-4 py-2 text-xs font-semibold text-white bg-blue-900 hover:bg-blue-950 rounded-xl shadow transition inline-flex items-center gap-1.5"
+              className="px-4 py-2 text-xs font-semibold text-white bg-[#002B49] hover:bg-[#001D33] rounded-xl shadow-xs transition inline-flex items-center gap-1.5"
             >
               <Download className="w-3.5 h-3.5" />
               <span>ดาวน์โหลด PNG ({resolution}px)</span>

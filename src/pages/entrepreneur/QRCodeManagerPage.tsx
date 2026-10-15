@@ -40,7 +40,7 @@ export const QRCodeManagerPage: React.FC = () => {
       {/* Guidelines Card */}
       <div className="p-4 rounded-2xl bg-slate-900 text-slate-200 text-xs space-y-2 shadow-sm">
         <div className="flex items-center gap-2 font-bold text-white text-sm">
-          <QrCode className="w-4 h-4 text-amber-400" />
+          <QrCode className="w-4 h-4 text-slate-300" />
           <span>ข้อกำหนดการพิมพ์ QR Code ฉลากดิจิทัล อย. บนบรรจุภัณฑ์:</span>
         </div>
         <ul className="list-disc list-inside space-y-1 text-slate-300 pl-1 text-[11px] leading-relaxed">
@@ -72,12 +72,12 @@ export const QRCodeManagerPage: React.FC = () => {
             <div
               key={product.id}
               className={`bg-white rounded-2xl border p-5 shadow-xs transition hover:shadow-md flex flex-col justify-between ${
-                isPublished ? 'border-slate-200 hover:border-blue-400' : 'border-amber-200 bg-amber-50/10'
+                isPublished ? 'border-slate-200 hover:border-slate-400' : 'border-slate-200 bg-slate-50/50'
               }`}
             >
               <div>
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <span className="text-[11px] font-mono text-blue-900 font-bold bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                  <span className="text-[11px] font-mono text-slate-800 font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
                     {product.regNumber}
                   </span>
                   <StatusBadge status={label?.status || product.activeLabelStatus || 'draft'} size="sm" />
@@ -97,8 +97,8 @@ export const QRCodeManagerPage: React.FC = () => {
                 </div>
 
                 {!isPublished && (
-                  <p className="text-[11px] text-amber-700 mt-2 flex items-center gap-1">
-                    <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+                  <p className="text-[11px] text-slate-500 mt-2 flex items-center gap-1">
+                    <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 text-slate-400" />
                     <span>ยังไม่ได้รับอนุมัติเผยแพร่ หากพิมพ์ก่อนจะแสดงสถานะระงับ/รอตรวจ</span>
                   </p>
                 )}

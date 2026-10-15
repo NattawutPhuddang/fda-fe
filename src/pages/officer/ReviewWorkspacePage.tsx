@@ -235,7 +235,7 @@ export const ReviewWorkspacePage: React.FC = () => {
           {label.status === 'pending_review' && (
             <button
               onClick={handleClaim}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-1.5"
+              className="px-4 py-2 bg-[#002B49] hover:bg-[#001D33] text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-1.5"
             >
               <UserCheck className="w-4 h-4" />
               <span>รับเรื่องพิจารณา (Claim Request)</span>
@@ -461,7 +461,7 @@ export const ReviewWorkspacePage: React.FC = () => {
                         variant: 'success'
                       })
                     }
-                    className="py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center justify-center gap-1.5"
+                    className="py-2.5 px-3 bg-[#002B49] hover:bg-[#001D33] text-white rounded-xl text-xs font-bold shadow-xs transition flex items-center justify-center gap-1.5"
                   >
                     <CheckCircle2 className="w-4 h-4" />
                     <span>อนุมัติ (Approve)</span>
@@ -477,7 +477,7 @@ export const ReviewWorkspacePage: React.FC = () => {
                         variant: 'warning'
                       })
                     }
-                    className="py-2.5 px-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow transition flex items-center justify-center gap-1.5"
+                    className="py-2.5 px-3 bg-slate-700 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shadow-xs transition flex items-center justify-center gap-1.5"
                   >
                     <AlertTriangle className="w-4 h-4" />
                     <span>ส่งกลับแก้ไข</span>

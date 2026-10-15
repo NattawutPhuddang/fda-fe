@@ -154,7 +154,7 @@ export const ProductListPage: React.FC = () => {
                         {label ? (
                           <Link
                             to={`/entrepreneur/labels/${label.id}/edit`}
-                            className="p-1.5 text-blue-700 hover:text-blue-950 hover:bg-blue-50 rounded-lg transition"
+                            className="p-1.5 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
                             title="แก้ไขฉลากดิจิทัล"
                           >
                             <Tag className="w-4 h-4" />
@@ -162,7 +162,7 @@ export const ProductListPage: React.FC = () => {
                         ) : (
                           <Link
                             to={`/entrepreneur/labels/new?productId=${prod.id}`}
-                            className="p-1.5 text-emerald-700 hover:text-emerald-900 hover:bg-emerald-50 rounded-lg transition"
+                            className="p-1.5 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
                             title="สร้างคำขอฉลากดิจิทัล"
                           >
                             <Tag className="w-4 h-4" />
@@ -171,7 +171,7 @@ export const ProductListPage: React.FC = () => {
 
                         <button
                           onClick={() => setQrProduct(prod)}
-                          className="p-1.5 text-purple-700 hover:text-purple-950 hover:bg-purple-50 rounded-lg transition"
+                          className="p-1.5 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
                           title="ดู QR Code ผลิตภัณฑ์"
                         >
                           <QrCode className="w-4 h-4" />

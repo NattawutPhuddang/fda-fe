@@ -284,7 +284,7 @@ export const LabelCreateEditPage: React.FC = () => {
         {/* Step 1: Select Master Product */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
           <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-            <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-900 flex items-center justify-center font-bold text-xs">
+            <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-xs">
               1
             </div>
             <h3 className="font-bold text-sm text-slate-800">เลือกผลิตภัณฑ์เป้าหมายจาก e-Submission</h3>
@@ -342,7 +342,7 @@ export const LabelCreateEditPage: React.FC = () => {
         {/* Step 2: General Label Content */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
           <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-            <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-900 flex items-center justify-center font-bold text-xs">
+            <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-xs">
               2
             </div>
             <h3 className="font-bold text-sm text-slate-800">ข้อมูลรายละเอียดฉลาก (ทั่วไปและสองภาษา)</h3>
@@ -449,7 +449,7 @@ export const LabelCreateEditPage: React.FC = () => {
         {activeProduct?.category === 'drug' && (
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-              <div className="w-7 h-7 rounded-lg bg-teal-100 text-teal-900 flex items-center justify-center font-bold text-xs">
+              <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-xs">
                 3
               </div>
               <h3 className="font-bold text-sm text-slate-800">ข้อมูลเฉพาะหมวดหมู่ยาแผนปัจจุบัน (Drug Details)</h3>
@@ -495,7 +495,7 @@ export const LabelCreateEditPage: React.FC = () => {
         {activeProduct?.category === 'cosmetic' && (
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-              <div className="w-7 h-7 rounded-lg bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-xs">
+              <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-xs">
                 3
               </div>
               <h3 className="font-bold text-sm text-slate-800">ข้อมูลเฉพาะหมวดเครื่องสำอาง (Cosmetic Ingredients)</h3>

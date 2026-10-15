@@ -48,9 +48,9 @@ export const IntegrationSettingsPage: React.FC = () => {
       </div>
 
       {/* Mandatory Notice Banner */}
-      <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 text-xs space-y-2 shadow-sm">
-        <div className="flex items-center gap-2 font-bold text-amber-900 text-sm">
-          <AlertCircle className="w-4 h-4 text-amber-600" />
+      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-700 text-xs space-y-2 shadow-xs">
+        <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
+          <AlertCircle className="w-4 h-4 text-slate-500" />
           <span>ข้อกำหนดความโปร่งใส (Mandatory Compliance Notice):</span>
         </div>
         <p className="leading-relaxed">
@@ -62,14 +62,14 @@ export const IntegrationSettingsPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {integrations.map(item => {
           let statusBadge = (
-            <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-semibold">
+            <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-300 font-semibold">
               Integration Placeholder
             </span>
           );
 
           if (item.status === 'CONFIGURED') {
             statusBadge = (
-              <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-blue-100 text-blue-900 border border-blue-300 font-semibold">
+              <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#002B49] text-white border border-[#002B49] font-semibold">
                 Architecture Ready
               </span>
             );

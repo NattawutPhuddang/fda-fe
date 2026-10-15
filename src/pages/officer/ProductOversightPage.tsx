@@ -121,7 +121,7 @@ export const ProductOversightPage: React.FC = () => {
 
       {/* Oversight Guidance */}
       <div className="p-4 rounded-2xl bg-slate-900 text-slate-200 text-xs space-y-1.5 shadow-sm">
-        <div className="flex items-center gap-2 font-bold text-amber-400 text-sm">
+        <div className="flex items-center gap-2 font-bold text-slate-200 text-sm">
           <ShieldAlert className="w-4 h-4" />
           <span>อำนาจการสั่งระงับฉลากดิจิทัลตามพระราชบัญญัติอาหารและยา:</span>
         </div>
@@ -215,7 +215,7 @@ export const ProductOversightPage: React.FC = () => {
                           isSuspended ? (
                             <button
                               onClick={() => setTargetAction({ label, product: prod, type: 'UNSUSPEND' })}
-                              className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-xs transition flex items-center gap-1"
+                              className="px-2.5 py-1 bg-[#002B49] hover:bg-[#001D33] text-white rounded-lg text-xs font-semibold shadow-xs transition flex items-center gap-1"
                               title="ยกเลิกคำสั่งระงับ และเปิดเผยแพร่ตามปกติ"
                             >
                               <RotateCcw className="w-3.5 h-3.5" />
