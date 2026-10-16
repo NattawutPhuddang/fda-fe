@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { storage } from '../../services/storage';
 import { exportToCSV, exportToExcel } from '../../services/exportService';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../context/AuthContext';
 import { 
   FileSpreadsheet, 
   Download, 
@@ -15,6 +16,7 @@ import {
 import { StatusBadge } from '../../components/common/StatusBadge';
 
 export const OfficerReportsPage: React.FC = () => {
+  const { role } = useAuth();
   const { success } = useToast();
   const products = storage.getProducts();
   const labels = storage.getLabels();
@@ -56,9 +58,13 @@ export const OfficerReportsPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">รายงานสรุปผลการดำเนินงานและสถิติ อย.</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+            {role === 'auditor' ? 'รายงานตรวจสอบและสถิติข้อมูล อย.' : 'รายงานสรุปผลการดำเนินงานและสถิติ อย.'}
+          </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            ศูนย์รายงานและวิเคราะห์ข้อมูลคำขอฉลากดิจิทัลเพื่อการกำกับดูแลเชิงรุกและการส่งออกข้อมูล
+            {role === 'auditor'
+              ? 'ศูนย์รายงานข้อมูลคำขอและประวัติฉลากดิจิทัลสำหรับการตรวจสอบและส่งออกข้อมูล'
+              : 'ศูนย์รายงานและวิเคราะห์ข้อมูลคำขอฉลากดิจิทัลเพื่อการกำกับดูแลเชิงรุกและการส่งออกข้อมูล'}
           </p>
         </div>
 

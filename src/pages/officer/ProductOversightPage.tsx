@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export const ProductOversightPage: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, role } = useAuth();
   const { success, warning } = useToast();
   const [products, setProducts] = useState<Product[]>(() => storage.getProducts());
   const [labels, setLabels] = useState<DigitalLabel[]>(() => storage.getLabels());
@@ -122,11 +122,17 @@ export const ProductOversightPage: React.FC = () => {
       {/* Oversight Guidance */}
       <div className="p-4 rounded-2xl bg-slate-900 text-slate-200 text-xs space-y-1.5 shadow-sm">
         <div className="flex items-center gap-2 font-bold text-slate-200 text-sm">
-          <ShieldAlert className="w-4 h-4" />
-          <span>อำนาจการสั่งระงับฉลากดิจิทัลตามพระราชบัญญัติอาหารและยา:</span>
+          <ShieldAlert className="w-4 h-4 text-amber-400" />
+          <span>
+            {role === 'auditor'
+              ? 'สิทธิ์การเข้าถึงสำหรับผู้ตรวจสอบ (Auditor - Read Only):'
+              : 'อำนาจการสั่งระงับฉลากดิจิทัลตามพระราชบัญญัติอาหารและยา:'}
+          </span>
         </div>
         <p className="leading-relaxed text-slate-300">
-          เมื่อเจ้าหน้าที่ อย. ตรวจพบผลิตภัณฑ์ที่มีสารต้องห้าม ฉลากเป็นเท็จ หรือมีคำสั่งเรียกเก็บคืน (Recall) เจ้าหน้าที่สามารถกด <strong>"สั่งระงับฉลาก (Suspend)"</strong> โดยระบบจะปรับปรุงผลลัพธ์การสแกน QR Code เป็นการแจ้งเตือนอันตรายสีแดงทันทีแบบ Real-time เพื่อคุ้มครองประชาชน
+          {role === 'auditor'
+            ? 'ผู้ตรวจสอบ (Auditor) มีสิทธิ์ในการสืบค้น ตรวจสอบประวัติสถานะของฉลาก และเปิดดูตัวอย่างฉลากดิจิทัลของประชาชนแบบอ่านอย่างเดียว (Read-Only) เพื่อการกำกับตรวจสอบความถูกต้อง โดยไม่มีสิทธิ์ในการสั่งระงับหรือแก้ไขฉลาก'
+            : 'เมื่อเจ้าหน้าที่ อย. ตรวจพบผลิตภัณฑ์ที่มีสารต้องห้าม ฉลากเป็นเท็จ หรือมีคำสั่งเรียกเก็บคืน (Recall) เจ้าหน้าที่สามารถกด "สั่งระงับฉลาก (Suspend)" โดยระบบจะปรับปรุงผลลัพธ์การสแกน QR Code เป็นการแจ้งเตือนอันตรายสีแดงทันทีแบบ Real-time เพื่อคุ้มครองประชาชน'}
         </p>
       </div>
 
@@ -211,7 +217,7 @@ export const ProductOversightPage: React.FC = () => {
                           <Eye className="w-4 h-4" />
                         </a>
 
-                        {label && (
+                        {role !== 'auditor' && label && (
                           isSuspended ? (
                             <button
                               onClick={() => setTargetAction({ label, product: prod, type: 'UNSUSPEND' })}

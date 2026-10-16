@@ -69,11 +69,15 @@ export const App: React.FC = () => {
               <Route path="/entrepreneur/representatives" element={<RepresentativePage />} />
             </Route>
 
-            {/* FDA Officer Portal Routes */}
+            {/* FDA Officer Portal Routes (Officer & Admin only) */}
             <Route element={<AppLayout allowedRoles={['officer', 'admin']} />}>
               <Route path="/officer/dashboard" element={<OfficerDashboard />} />
               <Route path="/officer/queue" element={<RequestQueuePage />} />
               <Route path="/officer/review/:id" element={<ReviewWorkspacePage />} />
+            </Route>
+
+            {/* Officer & Auditor Shared Routes (Oversight & Reports) */}
+            <Route element={<AppLayout allowedRoles={['officer', 'admin', 'auditor']} />}>
               <Route path="/officer/oversight" element={<ProductOversightPage />} />
               <Route path="/officer/reports" element={<OfficerReportsPage />} />
             </Route>
