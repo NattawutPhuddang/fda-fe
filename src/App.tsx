@@ -69,7 +69,7 @@ export const App: React.FC = () => {
               <Route path="/entrepreneur/representatives" element={<RepresentativePage />} />
             </Route>
 
-            {/* FDA Officer Portal Routes (Officer & Admin only) */}
+            {/* FDA Officer Portal Routes (Officer & Admin) */}
             <Route element={<AppLayout allowedRoles={['officer', 'admin']} />}>
               <Route path="/officer/dashboard" element={<OfficerDashboard />} />
               <Route path="/officer/queue" element={<RequestQueuePage />} />

@@ -29,7 +29,7 @@ export const LoginPage: React.FC = () => {
     if (ok) {
       success(`เข้าสู่ระบบสำเร็จในบทบาท: ${targetRole}`);
       if (targetRole === 'entrepreneur') navigate('/entrepreneur/dashboard');
-      else if (targetRole === 'officer') navigate('/officer/dashboard');
+      else if (targetRole === 'officer') navigate('/officer/queue');
       else if (targetRole === 'admin') navigate('/admin/dashboard');
       else if (targetRole === 'auditor') navigate('/auditor/logs');
     } else {
@@ -157,20 +157,20 @@ export const LoginPage: React.FC = () => {
                 className="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-[#002B49] hover:bg-slate-50/70 transition group flex items-center justify-between"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="w-5 h-5 text-slate-600" />
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-800 flex items-center justify-center flex-shrink-0 font-bold">
+                    <Briefcase className="w-5 h-5 text-blue-700" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-[#002B49]">
                         ภญ. วรรณภา สิริกุล
                       </span>
-                      <span className="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.2 rounded font-medium border border-slate-300">
+                      <span className="bg-blue-50 text-blue-800 text-[10px] px-2 py-0.2 rounded font-medium border border-blue-200">
                         เจ้าหน้าที่ อย.
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-500 mt-0.5">กองกำกับและตรวจสอบผลิตภัณฑ์ (อย.)</p>
-                    <p className="text-[10px] text-slate-400">สิทธิ์: ตรวจ Checklist, อนุมัติ/ส่งกลับแก้ไข, สั่งระงับฉลาก</p>
+                    <p className="text-[10px] text-slate-400">สิทธิ์: รับเรื่อง, ตรวจ Checklist 3 ระดับ, เปรียบเทียบ Diff, ส่งกลับแก้ไข, อนุมัติ/สั่งระงับ, ดูรายงาน</p>
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-slate-800 group-hover:translate-x-0.5 transition" />
@@ -216,7 +216,7 @@ export const LoginPage: React.FC = () => {
                         นางสาวกุลธิดา ประเสริฐสุข
                       </span>
                       <span className="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.2 rounded font-medium border border-slate-300">
-                        ผู้ตรวจสอบ (Auditor)
+                        ผู้ตรวจสอบระบบ (Auditor)
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-500 mt-0.5">สำนักงานการตรวจเงินแผ่นดิน (สตง.)</p>

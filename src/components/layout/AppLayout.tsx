@@ -3,6 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Topbar } from './Topbar';
 import { Sidebar } from './Sidebar';
+import { SessionTimeoutEnforcer } from '../common/SessionTimeoutEnforcer';
 
 interface AppLayoutProps {
   allowedRoles?: string[];
@@ -24,6 +25,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ allowedRoles }) => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+      <SessionTimeoutEnforcer />
       <Topbar onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
 
       <div className="flex-1 flex">

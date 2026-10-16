@@ -1,4 +1,9 @@
-export type UserRole = 'public' | 'entrepreneur' | 'officer' | 'admin' | 'auditor';
+export type UserRole = 
+  | 'public' 
+  | 'entrepreneur' 
+  | 'officer' 
+  | 'admin' 
+  | 'auditor';
 
 export interface User {
   id: string;
@@ -161,6 +166,10 @@ export interface DigitalLabel {
   previousVersionId?: string;
   currentOfficerId?: string;
   currentOfficerName?: string;
+  claimedAt?: string;
+  claimedByName?: string;
+  revisionAttachmentUrl?: string;
+  revisionAttachmentName?: string;
 }
 
 export interface Product {
@@ -192,8 +201,48 @@ export interface ReviewChecklistItem {
   category: string;
   title: string;
   description: string;
+  status: 'pending' | 'passed' | 'failed' | 'revision_needed';
   passed: boolean;
   notes?: string;
+  isRequired?: boolean;
+}
+
+export interface ChecklistTemplateItem {
+  id: string;
+  category: ProductCategory | 'ALL';
+  categoryNameTh?: string;
+  title: string;
+  description: string;
+  isRequired: boolean;
+  order: number;
+  status: 'ACTIVE' | 'INACTIVE';
+}
+
+export interface SuspensionRecord {
+  id: string;
+  labelId: string;
+  productId: string;
+  productNameTh: string;
+  regNumber: string;
+  action: 'SUSPEND' | 'UNSUSPEND';
+  reason: string;
+  orderNumber?: string;
+  effectiveDate?: string;
+  authorizedSignatory?: string;
+  officerId: string;
+  officerName: string;
+  timestamp: string;
+}
+
+export interface UserHistoryRecord {
+  id: string;
+  userId: string;
+  action: 'STATUS_CHANGE' | 'ROLE_CHANGE' | 'CREATE' | 'UPDATE';
+  details: string;
+  changedBy: string;
+  timestamp: string;
+  previousValue?: string;
+  newValue?: string;
 }
 
 export interface LabelReview {
@@ -257,6 +306,10 @@ export interface IntegrationStatus {
   errorMessage: string | null;
   isMock: boolean;
   notes: string;
+  responseTimeMs?: number;
+  lastPayload?: string;
+  lastErrorDetail?: string;
+  isSimulatedError?: boolean;
 }
 
 export interface SystemConfig {

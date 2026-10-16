@@ -7,7 +7,11 @@ import {
   SystemConfig, 
   AuditLog, 
   ReviewChecklistItem,
+  ChecklistTemplateItem,
+  SuspensionRecord,
+  UserHistoryRecord,
   UserRole,
+  ProductCategory,
   SystemNotification,
   LabelTimelineEvent,
   DigitalLabelVersionRecord
@@ -21,6 +25,7 @@ import {
   INITIAL_SYSTEM_CONFIG, 
   INITIAL_AUDIT_LOGS,
   INITIAL_CHECKLIST_TEMPLATE,
+  INITIAL_CHECKLIST_TEMPLATES,
   INITIAL_NOTIFICATIONS,
   INITIAL_TIMELINE_EVENTS,
   INITIAL_LABEL_VERSIONS
@@ -35,6 +40,9 @@ const STORAGE_KEYS = {
   CONFIG: 'thai_fda_config_v1',
   AUDIT_LOGS: 'thai_fda_audit_logs_v1',
   CHECKLISTS: 'thai_fda_checklists_v1',
+  CHECKLIST_TEMPLATES: 'thai_fda_checklist_templates_v1',
+  SUSPENSIONS: 'thai_fda_suspensions_v1',
+  USER_HISTORY: 'thai_fda_user_history_v1',
   CURRENT_USER: 'thai_fda_current_user_v1',
   NOTIFICATIONS: 'thai_fda_notifications_v1',
   TIMELINE: 'thai_fda_timeline_v1',
@@ -56,6 +64,9 @@ class StorageEngine {
       localStorage.setItem(STORAGE_KEYS.CONFIG, JSON.stringify(INITIAL_SYSTEM_CONFIG));
       localStorage.setItem(STORAGE_KEYS.AUDIT_LOGS, JSON.stringify(INITIAL_AUDIT_LOGS));
       localStorage.setItem(STORAGE_KEYS.CHECKLISTS, JSON.stringify({}));
+      localStorage.setItem(STORAGE_KEYS.CHECKLIST_TEMPLATES, JSON.stringify(INITIAL_CHECKLIST_TEMPLATES));
+      localStorage.setItem(STORAGE_KEYS.SUSPENSIONS, JSON.stringify([]));
+      localStorage.setItem(STORAGE_KEYS.USER_HISTORY, JSON.stringify([]));
       localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(INITIAL_NOTIFICATIONS));
       localStorage.setItem(STORAGE_KEYS.TIMELINE, JSON.stringify(INITIAL_TIMELINE_EVENTS));
       localStorage.setItem(STORAGE_KEYS.VERSIONS, JSON.stringify(INITIAL_LABEL_VERSIONS));
@@ -198,7 +209,22 @@ class StorageEngine {
   // --- Users ---
   public getUsers(): User[] {
     const raw = localStorage.getItem(STORAGE_KEYS.USERS);
-    return raw ? JSON.parse(raw) : INITIAL_USERS;
+    if (!raw) return INITIAL_USERS;
+    try {
+      const users: User[] = JSON.parse(raw);
+      // Sanitize any stale sub-role back to standard 'officer' and remove legacy split accounts
+      const sanitized = users
+        .filter(u => !['usr-reviewer-01', 'usr-evaluator-01', 'usr-approver-01'].includes(u.id))
+        .map(u => {
+          if ((u.role as string).startsWith('officer_')) {
+            return { ...u, role: 'officer' as UserRole };
+          }
+          return u;
+        });
+      return sanitized;
+    } catch {
+      return INITIAL_USERS;
+    }
   }
 
   public saveUsers(users: User[]): void {
@@ -211,7 +237,16 @@ class StorageEngine {
 
   public getCurrentUser(): User | null {
     const raw = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    try {
+      const user: User = JSON.parse(raw);
+      if ((user.role as string).startsWith('officer_')) {
+        user.role = 'officer';
+      }
+      return user;
+    } catch {
+      return null;
+    }
   }
 
   public setCurrentUser(user: User | null): void {
@@ -295,10 +330,42 @@ class StorageEngine {
   }
 
   // --- Review Checklists ---
-  public getChecklistForLabel(labelId: string): ReviewChecklistItem[] {
+  public getChecklistTemplates(): ChecklistTemplateItem[] {
+    const raw = localStorage.getItem(STORAGE_KEYS.CHECKLIST_TEMPLATES);
+    return raw ? JSON.parse(raw) : INITIAL_CHECKLIST_TEMPLATES;
+  }
+
+  public saveChecklistTemplates(templates: ChecklistTemplateItem[]): void {
+    localStorage.setItem(STORAGE_KEYS.CHECKLIST_TEMPLATES, JSON.stringify(templates));
+  }
+
+  public getChecklistForLabel(labelId: string, category?: ProductCategory): ReviewChecklistItem[] {
     const raw = localStorage.getItem(STORAGE_KEYS.CHECKLISTS);
     const map = raw ? JSON.parse(raw) : {};
-    return map[labelId] || JSON.parse(JSON.stringify(INITIAL_CHECKLIST_TEMPLATE));
+    if (map[labelId] && map[labelId].length > 0) {
+      return map[labelId];
+    }
+
+    // Build from category templates
+    const templates = this.getChecklistTemplates();
+    const filteredTemplates = templates.filter(
+      t => t.status === 'ACTIVE' && (t.category === 'ALL' || !category || t.category === category)
+    );
+
+    if (filteredTemplates.length > 0) {
+      return filteredTemplates.map(t => ({
+        id: `chk-${labelId}-${t.id}`,
+        category: t.categoryNameTh || 'เกณฑ์ตรวจสอบ อย.',
+        title: t.title,
+        description: t.description,
+        status: 'pending' as const,
+        passed: false,
+        isRequired: t.isRequired,
+        notes: ''
+      }));
+    }
+
+    return JSON.parse(JSON.stringify(INITIAL_CHECKLIST_TEMPLATE));
   }
 
   public saveChecklistForLabel(labelId: string, items: ReviewChecklistItem[]): void {
@@ -306,6 +373,69 @@ class StorageEngine {
     const map = raw ? JSON.parse(raw) : {};
     map[labelId] = items;
     localStorage.setItem(STORAGE_KEYS.CHECKLISTS, JSON.stringify(map));
+  }
+
+  // --- Suspensions ---
+  public getSuspensions(): SuspensionRecord[] {
+    const raw = localStorage.getItem(STORAGE_KEYS.SUSPENSIONS);
+    return raw ? JSON.parse(raw) : [];
+  }
+
+  public saveSuspension(record: SuspensionRecord): void {
+    const all = this.getSuspensions();
+    all.unshift(record);
+    localStorage.setItem(STORAGE_KEYS.SUSPENSIONS, JSON.stringify(all));
+  }
+
+  public getSuspensionsByLabelId(labelId: string): SuspensionRecord[] {
+    return this.getSuspensions().filter(s => s.labelId === labelId);
+  }
+
+  // --- User History ---
+  public getUserHistory(userId?: string): UserHistoryRecord[] {
+    const raw = localStorage.getItem(STORAGE_KEYS.USER_HISTORY);
+    const all: UserHistoryRecord[] = raw ? JSON.parse(raw) : [];
+    if (userId) {
+      return all.filter(h => h.userId === userId);
+    }
+    return all;
+  }
+
+  public addUserHistory(record: Omit<UserHistoryRecord, 'id' | 'timestamp'>): UserHistoryRecord {
+    const all = this.getUserHistory();
+    const newRecord: UserHistoryRecord = {
+      id: `uh-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      timestamp: new Date().toISOString(),
+      ...record
+    };
+    all.unshift(newRecord);
+    localStorage.setItem(STORAGE_KEYS.USER_HISTORY, JSON.stringify(all));
+    return newRecord;
+  }
+
+  // --- In-Use Guard for Master Data ---
+  public isMasterDataInUse(type: 'category' | 'doctype', code: string): { inUse: boolean; count: number; message?: string } {
+    if (type === 'category') {
+      const prods = this.getProducts().filter(p => p.category === code);
+      if (prods.length > 0) {
+        return {
+          inUse: true,
+          count: prods.length,
+          message: `หมวดหมู่นี้ถูกใช้งานอยู่ในทะเบียนผลิตภัณฑ์ ${prods.length} รายการ (เช่น ${prods[0].productNameTh}) ไม่สามารถลบหรือปิดใช้งานได้`
+        };
+      }
+    } else if (type === 'doctype') {
+      const labels = this.getLabels();
+      const inUseLabels = labels.filter(l => l.documents && l.documents.some(d => d.type === code));
+      if (inUseLabels.length > 0) {
+        return {
+          inUse: true,
+          count: inUseLabels.length,
+          message: `ประเภทเอกสารนี้ถูกแนบใช้งานอยู่ในคำขอฉลาก ${inUseLabels.length} รายการ ไม่สามารถลบได้`
+        };
+      }
+    }
+    return { inUse: false, count: 0 };
   }
 
   // --- Notifications ---

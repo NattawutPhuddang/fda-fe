@@ -7,6 +7,7 @@ import {
   SystemConfig, 
   AuditLog, 
   ReviewChecklistItem,
+  ChecklistTemplateItem,
   SystemNotification,
   LabelTimelineEvent,
   DigitalLabelVersionRecord
@@ -29,7 +30,7 @@ export const INITIAL_USERS: User[] = [
   },
   {
     id: 'usr-officer-01',
-    username: 'wannapa.fda',
+    username: 'officer.fda',
     fullName: 'ภญ. วรรณภา สิริกุล',
     email: 'wannapa.s@fda.moph.go.th',
     role: 'officer',
@@ -39,7 +40,7 @@ export const INITIAL_USERS: User[] = [
     isActive: true,
     lastLoginAt: '2026-10-15T11:15:00Z',
     avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-    permissions: ['VIEW_ALL_REQUESTS', 'CLAIM_REQUEST', 'REVIEW_CHECKLIST', 'APPROVE_LABEL', 'REJECT_LABEL', 'SUSPEND_LABEL', 'EXPORT_REPORTS']
+    permissions: ['VIEW_ALL_REQUESTS', 'CLAIM_REQUEST', 'REVIEW_CHECKLIST', 'REQUEST_REVISION', 'APPROVE_LABEL', 'REJECT_LABEL', 'SUSPEND_LABEL', 'EXPORT_REPORTS']
   },
   {
     id: 'usr-admin-01',
@@ -344,50 +345,6 @@ export const INITIAL_LABELS: DigitalLabel[] = [
   }
 ];
 
-export const INITIAL_CHECKLIST_TEMPLATE: ReviewChecklistItem[] = [
-  {
-    id: 'chk-01',
-    category: 'ความถูกต้องของข้อมูลทะเบียน (Registration Match)',
-    title: 'เลขสารบบ / ทะเบียน และชื่อผลิตภัณฑ์',
-    description: 'เลขทะเบียน อย., Newcode และชื่อผลิตภัณฑ์ภาษาไทย-อังกฤษ ตรงตามข้อมูลที่ได้รับอนุมัติใน e-Submission 100%',
-    passed: false
-  },
-  {
-    id: 'chk-02',
-    category: 'ข้อมูลผู้รับอนุญาตและสถานที่ (Licensee & Site)',
-    title: 'ชื่อและที่ตั้งสถานที่ผลิตหรือนำเข้า',
-    description: 'ชื่อนิติบุคคลผู้รับอนุญาต และที่อยู่โรงงาน/ผู้นำเข้า ตรงตามใบอนุญาตตั้งสถานที่',
-    passed: false
-  },
-  {
-    id: 'chk-03',
-    category: 'เนื้อหาฉลากและข้อความบังคับ (Mandatory Labeling)',
-    title: 'ส่วนประกอบสำคัญ / ข้อมูลโภชนาการ / ส่วนผสม',
-    description: 'แสดงรายการส่วนประกอบเรียงตามลำดับปริมาณอย่างถูกต้อง มีหน่วยสากลครบถ้วน',
-    passed: false
-  },
-  {
-    id: 'chk-04',
-    category: 'คำเตือนและข้อควรระวัง (Warnings & Precautions)',
-    title: 'ข้อความคำเตือนตามประกาศกระทรวงสาธารณสุข',
-    description: 'มีกรอบข้อความคำเตือนขนาดตัวอักษรไม่น้อยกว่าเกณฑ์ที่กฎหมายกำหนด ตัวหนังสือชัดเจน',
-    passed: false
-  },
-  {
-    id: 'chk-05',
-    category: 'การอวดอ้างสรรพคุณ (Claims Compliance)',
-    title: 'ไม่มีข้อความอวดอ้างสรรพคุณเกินจริงหรือทำให้เข้าใจผิด',
-    description: 'ไม่ปรากฏข้อความรักษาโรค บำบัดอาการ หรืออ้างผลลัพธ์ที่เป็นไปไม่ได้ทางการแพทย์',
-    passed: false
-  },
-  {
-    id: 'chk-06',
-    category: 'เอกสารหลักฐานประกอบ (Supporting Documents)',
-    title: 'เอกสาร PDF กำกับผลิตภัณฑ์และผลแล็บ',
-    description: 'ไฟล์เอกสารแนบมีความคมชัด เป็นเอกสารทางการที่มีตราประทับหรือลายมือชื่ออิเล็กทรอนิกส์ครบถ้วน',
-    passed: false
-  }
-];
 
 export const INITIAL_REPRESENTATIVES: Representative[] = [
   {
@@ -709,4 +666,193 @@ export const INITIAL_LABEL_VERSIONS: DigitalLabelVersionRecord[] = [
     createdAt: '2026-09-05T14:30:00Z'
   }
 ];
+export const INITIAL_CHECKLIST_TEMPLATES: ChecklistTemplateItem[] = [
+  // หมวดหมู่อาหารและเครื่องดื่ม (Food)
+  {
+    id: 'tmpl-food-01',
+    category: 'food',
+    categoryNameTh: 'อาหารและเครื่องดื่ม',
+    title: 'ความถูกต้องของชื่อผลิตภัณฑ์และเลขสารบบอาหาร 13 หลัก',
+    description: 'ตรวจสอบความถูกต้องของชื่อภาษาไทย/อังกฤษ และเลขสารบบอาหารว่าตรงกับฐานข้อมูล e-Submission ของ อย.',
+    isRequired: true,
+    order: 1,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-food-02',
+    category: 'food',
+    categoryNameTh: 'อาหารและเครื่องดื่ม',
+    title: 'การแสดงข้อมูลส่วนประกอบสำคัญและข้อมูลสำหรับผู้แพ้อาหาร',
+    description: 'ตรวจสอบร้อยละของส่วนประกอบ และการแจ้งเตือนสารก่อภูมิแพ้อย่างชัดเจนตามประกาศกระทรวงสาธารณสุข',
+    isRequired: true,
+    order: 2,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-food-03',
+    category: 'food',
+    categoryNameTh: 'อาหารและเครื่องดื่ม',
+    title: 'ตารางข้อมูลโภชนาการ (Nutrition Facts) และพลังงาน',
+    description: 'ตรวจสอบขนาดหนึ่งหน่วยบริโภค จำนวนหน่วยบริโภคต่อภาชนะ และพลังงานทั้งหมด',
+    isRequired: true,
+    order: 3,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-food-04',
+    category: 'food',
+    categoryNameTh: 'อาหารและเครื่องดื่ม',
+    title: 'คำเตือน สภาวะการเก็บรักษา และวันหมดอายุ',
+    description: 'ตรวจสอบข้อความคำเตือนตามกลุ่มผลิตภัณฑ์ และสภาวะอุณหภูมิที่ควรเก็บรักษา',
+    isRequired: true,
+    order: 4,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-food-05',
+    category: 'food',
+    categoryNameTh: 'อาหารและเครื่องดื่ม',
+    title: 'เอกสารผลวิเคราะห์ทางห้องปฏิบัติการ (Lab Certificate)',
+    description: 'เอกสารแนบยืนยันสารอาหาร โลหะหนัก และจุลินทรีย์จากห้องแล็บที่ได้รับมาตรฐาน ISO/IEC 17025',
+    isRequired: false,
+    order: 5,
+    status: 'ACTIVE'
+  },
 
+  // หมวดหมู่ยาแผนปัจจุบัน (Drug)
+  {
+    id: 'tmpl-drug-01',
+    category: 'drug',
+    categoryNameTh: 'ยาแผนปัจจุบัน',
+    title: 'ชื่อการค้า ชื่อสามัญทางยา (Generic Name) และเลขทะเบียนตำรับยา',
+    description: 'ตรวจสอบความสอดคล้องกับใบอนุญาตผลิต/นำเข้ายา และเลขทะเบียนตำรับยา (เช่น 1A XX/XX)',
+    isRequired: true,
+    order: 1,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-drug-02',
+    category: 'drug',
+    categoryNameTh: 'ยาแผนปัจจุบัน',
+    title: 'เอกสารกำกับยาฉบับทางการ (Official Leaflet PDF)',
+    description: 'ตรวจสอบไฟล์เอกสารกำกับยาฉบับเต็มภาษาไทยสำหรับบุคลากรทางการแพทย์และประชาชน',
+    isRequired: true,
+    order: 2,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-drug-03',
+    category: 'drug',
+    categoryNameTh: 'ยาแผนปัจจุบัน',
+    title: 'ข้อบ่งใช้ ขนาดและวิธีใช้ยา (Indications & Dosage)',
+    description: 'ตรวจสอบข้อบ่งใช้ตรงตามตำรับยา และคำแนะนำขนาดยาตามช่วงอายุและน้ำหนัก',
+    isRequired: true,
+    order: 3,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-drug-04',
+    category: 'drug',
+    categoryNameTh: 'ยาแผนปัจจุบัน',
+    title: 'คำเตือน ข้อห้ามใช้ และอาการไม่พึงประสงค์ (Adverse Reactions)',
+    description: 'ข้อห้ามใช้ในหญิงตั้งครรภ์ ผู้ป่วยโรคตับ/ไต และอาการข้างเคียงที่ต้องเฝ้าระวัง',
+    isRequired: true,
+    order: 4,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-drug-05',
+    category: 'drug',
+    categoryNameTh: 'ยาแผนปัจจุบัน',
+    title: 'การจัดเก็บยา และหนังสือรับรองมาตรฐาน GMP/PICs',
+    description: 'อุณหภูมิการเก็บรักษา การป้องกันแสง และหนังสือรับรองมาตรฐานสถานที่ผลิตยา',
+    isRequired: false,
+    order: 5,
+    status: 'ACTIVE'
+  },
+
+  // หมวดหมู่เครื่องสำอาง (Cosmetic)
+  {
+    id: 'tmpl-cosm-01',
+    category: 'cosmetic',
+    categoryNameTh: 'เครื่องสำอาง',
+    title: 'เลขที่ใบรับจดแจ้งเครื่องสำอางและชื่อผลิตภัณฑ์',
+    description: 'ตรวจสอบเลขที่จดแจ้ง และชื่อการค้าว่าไม่มีคำอวดอ้างสรรพคุณเกินขอบเขตเครื่องสำอาง',
+    isRequired: true,
+    order: 1,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-cosm-02',
+    category: 'cosmetic',
+    categoryNameTh: 'เครื่องสำอาง',
+    title: 'รายชื่อสารส่วนประกอบทั้งหมดตามมาตรฐานสากล (INCI Name)',
+    description: 'เรียงลำดับความเข้มข้นสารจากมากไปน้อย และไม่มีสารต้องห้ามตามประกาศ อย.',
+    isRequired: true,
+    order: 2,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'tmpl-cosm-03',
+    category: 'cosmetic',
+    categoryNameTh: 'เครื่องสำอาง',
+    title: 'วิธีใช้ คำเตือนการแพ้ระคายเคือง และเลขครั้งที่ผลิต',
+    description: 'วิธีใช้ที่ถูกต้อง คำเตือนการทดสอบการแพ้ก่อนใช้ และเลข Lot ครั้งที่ผลิต',
+    isRequired: true,
+    order: 3,
+    status: 'ACTIVE'
+  }
+];
+
+export const INITIAL_CHECKLIST_TEMPLATE: ReviewChecklistItem[] = [
+  {
+    id: 'chk-001',
+    category: 'ความถูกต้องของข้อมูลพื้นฐาน',
+    title: 'เลขสารบบอาหาร / ทะเบียนยา ถูกต้องตรงกับฐานข้อมูล e-Submission อย.',
+    description: 'ตรวจสอบเลข 13 หลัก หรือเลขทะเบียนตำรับยา พร้อมสถานะว่ายังไม่หมดอายุหรือถูกเพิกถอน',
+    status: 'pending',
+    passed: false,
+    isRequired: true,
+    notes: ''
+  },
+  {
+    id: 'chk-002',
+    category: 'ความถูกต้องของข้อมูลพื้นฐาน',
+    title: 'ชื่อผลิตภัณฑ์ภาษาไทยและภาษาอังกฤษ ตรงกับใบอนุญาต',
+    description: 'ตรวจสอบตัวสะกด วรรคตอน และไม่มีคำโฆษณาอวดอ้างเกินจริงในชื่อผลิตภัณฑ์',
+    status: 'pending',
+    passed: false,
+    isRequired: true,
+    notes: ''
+  },
+  {
+    id: 'chk-003',
+    category: 'ส่วนประกอบและสารก่อภูมิแพ้',
+    title: 'ข้อมูลส่วนประกอบและสารก่อภูมิแพ้ครบถ้วนตามกฎหมาย',
+    description: 'ระบุร้อยละของส่วนผสมสำคัญ และมีกล่องข้อความเตือนสำหรับผู้แพ้อาหารหรือสารเคมี',
+    status: 'pending',
+    passed: false,
+    isRequired: true,
+    notes: ''
+  },
+  {
+    id: 'chk-004',
+    category: 'คำเตือนและข้อกำหนดเฉพาะ',
+    title: 'ข้อความคำเตือนตามที่กฎหมายกำหนด และขนาดตัวอักษรชัดเจน',
+    description: 'ตรวจสอบคำเตือนสุขภาพ เช่น "เด็กและสตรีมีครรภ์ไม่ควรรับประทาน" หรือ "ห้ามใช้ในผู้แพ้แอสไพริน"',
+    status: 'pending',
+    passed: false,
+    isRequired: true,
+    notes: ''
+  },
+  {
+    id: 'chk-005',
+    category: 'เอกสารแนบ',
+    title: 'เอกสารกำกับผลิตภัณฑ์ / Leaflet PDF มีเนื้อหาถูกต้องสมบูรณ์',
+    description: 'เปิดอ่านไฟล์ PDF ตรวจสอบว่าสามารถแสดงผลได้ชัดเจนและมีเนื้อหาตรงตามฉลากจริง',
+    status: 'pending',
+    passed: false,
+    isRequired: false,
+    notes: ''
+  }
+];

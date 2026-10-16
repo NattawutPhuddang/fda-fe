@@ -1,19 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { 
-  LayoutDashboard, 
-  Package, 
-  Tag, 
-  QrCode, 
-  BarChart3, 
-  Users, 
-  ClipboardCheck, 
-  ShieldCheck, 
-  FileSpreadsheet, 
-  Settings, 
-  Server, 
-  ShieldAlert, 
+import {
+  LayoutDashboard,
+  Package,
+  Tag,
+  QrCode,
+  BarChart3,
+  Users,
+  ClipboardCheck,
+  ShieldCheck,
+  FileSpreadsheet,
+  Settings,
+  Server,
+  ShieldAlert,
   Database,
   UserCog,
   FileSearch,
@@ -80,7 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     <>
       {/* Mobile Backdrop */}
       {isOpen && (
-        <div 
+        <div
           onClick={onClose}
           className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 md:hidden"
         />
@@ -88,9 +88,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed md:sticky top-16 z-40 h-[calc(100vh-4rem)] w-64 bg-slate-900 text-slate-300 flex flex-col justify-between transition-transform duration-300 ease-in-out border-r border-slate-800 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        }`}
+        className={`fixed md:sticky top-16 z-40 h-[calc(100vh-4rem)] w-64 bg-slate-900 text-slate-300 flex flex-col justify-between transition-transform duration-300 ease-in-out border-r border-slate-800 ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+          }`}
       >
         <div className="p-4 overflow-y-auto">
           {/* Section Header */}
@@ -106,10 +105,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 to={item.to}
                 onClick={() => onClose()}
                 className={({ isActive }) =>
-                  `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all ${
-                    isActive
-                      ? 'bg-[#002B49] text-white shadow-xs font-semibold'
-                      : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/70'
+                  `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all ${isActive
+                    ? 'bg-[#002B49] text-white shadow-xs font-semibold'
+                    : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/70'
                   }`
                 }
               >
@@ -149,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* System Footer info */}
-        <div className="p-4 border-t border-slate-800 text-[11px] text-slate-400 bg-slate-950/60">
+        {/* <div className="p-4 border-t border-slate-800 text-[11px] text-slate-400 bg-slate-950/60">
           <div className="flex items-center justify-between">
             <span>สภาพแวดล้อม:</span>
             <span className="text-slate-300 font-medium font-mono text-[10px] bg-slate-800 px-2 py-0.5 rounded">DEMO</span>
@@ -158,7 +156,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <span>ผู้ใช้งานปัจจุบัน:</span>
             <span className="text-slate-300 truncate max-w-[110px]">{currentUser?.fullName || 'ผู้เยี่ยมชม'}</span>
           </div>
-        </div>
+        </div> */}
       </aside>
     </>
   );

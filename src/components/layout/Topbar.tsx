@@ -22,7 +22,7 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
     if (role === 'entrepreneur') roleText = 'ผู้ประกอบการ';
     else if (role === 'officer') roleText = 'เจ้าหน้าที่ อย.';
     else if (role === 'admin') roleText = 'ผู้ดูแลระบบ';
-    else if (role === 'auditor') roleText = 'ผู้ตรวจสอบ (Auditor)';
+    else if (role === 'auditor') roleText = 'ผู้ตรวจสอบระบบ (Auditor)';
 
     return (
       <span className="bg-slate-100 text-slate-700 border border-slate-300 px-2.5 py-0.5 rounded text-xs font-medium">
@@ -65,9 +65,9 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
               <span className="font-bold text-slate-900 text-sm leading-tight">
                 ระบบฉลากดิจิทัล อย.
               </span>
-              <span className="hidden lg:inline-block text-[10px] bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.2 rounded font-mono">
+              {/* <span className="hidden lg:inline-block text-[10px] bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.2 rounded font-mono">
                 Gov Enterprise
-              </span>
+              </span> */}
             </div>
             <p className="text-[10px] text-slate-500 hidden sm:block leading-none mt-0.5">
               Thai FDA Digital Labeling Platform
