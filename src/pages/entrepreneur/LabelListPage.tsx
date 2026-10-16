@@ -1,10 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { storage } from '../../services/storage';
 import { DigitalLabel, Product, LabelStatus } from '../../services/types';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { QRModal } from '../../components/common/QRModal';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog';
+import { Modal } from '../../components/common/Modal';
+import { TimelineView } from '../../components/common/TimelineView';
+import { VersionDiffModal } from '../../components/entrepreneur/VersionDiffModal';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { 
@@ -18,19 +21,30 @@ import {
   Send, 
   AlertTriangle, 
   CheckCircle2,
-  Clock
+  Clock,
+  GitCompare,
+  PlusCircle,
+  ShieldCheck,
+  ShieldAlert
 } from 'lucide-react';
 
 export const LabelListPage: React.FC = () => {
   const { currentUser } = useAuth();
-  const { success, info } = useToast();
+  const { success, warning, error, info } = useToast();
+  const navigate = useNavigate();
+
   const [labels, setLabels] = useState<DigitalLabel[]>(() => storage.getLabels());
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [selectedForQR, setSelectedForQR] = useState<{ product: Product; label: DigitalLabel } | null>(null);
   const [labelToPublish, setLabelToPublish] = useState<DigitalLabel | null>(null);
 
+  // Timeline & Version Modals
+  const [timelineLabel, setTimelineLabel] = useState<DigitalLabel | null>(null);
+  const [diffLabel, setDiffLabel] = useState<DigitalLabel | null>(null);
+
   const products = storage.getProducts();
+  const repAuth = storage.checkRepresentativeAuthority('เผยแพร่ฉลากดิจิทัล');
 
   const filteredLabels = useMemo(() => {
     return labels.filter(lbl => {
@@ -47,15 +61,50 @@ export const LabelListPage: React.FC = () => {
   }, [labels, products, query, statusFilter]);
 
   const handlePublish = (targetLabel: DigitalLabel) => {
+    if (!repAuth.allowed) {
+      error(repAuth.reason || 'ตัวแทนไม่มีสิทธิ์เผยแพร่ฉลาก');
+      setLabelToPublish(null);
+      return;
+    }
+
     const updated: DigitalLabel = {
       ...targetLabel,
       status: 'published',
       publishedAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-    storage.saveLabel(updated, currentUser || undefined);
+    storage.saveLabel(updated, currentUser || undefined, 'ผู้ประกอบการกดเผยแพร่ฉลากดิจิทัลสู่สาธารณะ');
     setLabels(storage.getLabels());
+    setLabelToPublish(null);
     success(`เผยแพร่ฉลาก "${updated.titleTh}" สู่สาธารณะสำเร็จแล้ว! ประชาชนสามารถสแกน QR Code ได้ทันที`);
+  };
+
+  const handleCreateNewVersion = (targetLabel: DigitalLabel) => {
+    const repCheck = storage.checkRepresentativeAuthority('ยื่นคำขอฉลากดิจิทัล');
+    if (!repCheck.allowed) {
+      error(repCheck.reason || 'ตัวแทนไม่มีสิทธิ์สร้างคำขอฉลาก');
+      return;
+    }
+
+    const newVersionNumber = targetLabel.version + 1;
+    const newVersionLabel: DigitalLabel = {
+      ...targetLabel,
+      id: `lbl-${targetLabel.productId}-v${newVersionNumber}-${Date.now()}`,
+      version: newVersionNumber,
+      status: 'draft',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      submittedAt: undefined,
+      approvedAt: undefined,
+      publishedAt: undefined,
+      previousVersionId: targetLabel.id,
+      versionChangeReason: 'ปรับปรุงสูตรและรายละเอียดฉลากประจำปี'
+    };
+
+    storage.saveLabel(newVersionLabel, currentUser || undefined, `สร้างฉบับร่างเวอร์ชันใหม่ (v${newVersionNumber}.0)`);
+    setLabels(storage.getLabels());
+    success(`สร้างฉบับร่างเวอร์ชันใหม่ (v${newVersionNumber}.0) สำเร็จ กำลังเปิดหน้าแก้ไข...`);
+    navigate(`/entrepreneur/labels/${newVersionLabel.id}/edit`);
   };
 
   return (
@@ -78,6 +127,14 @@ export const LabelListPage: React.FC = () => {
         </Link>
       </div>
 
+      {/* Representative Alert if expired or revoked */}
+      {!repAuth.allowed && (
+        <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 text-xs flex items-center gap-2.5">
+          <ShieldAlert className="w-4 h-4 text-amber-700 flex-shrink-0" />
+          <span>{repAuth.reason}</span>
+        </div>
+      )}
+
       {/* Filter and Search Bar */}
       <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
@@ -94,17 +151,17 @@ export const LabelListPage: React.FC = () => {
         <select
           value={statusFilter}
           onChange={e => setStatusFilter(e.target.value)}
-          className="px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 font-medium"
         >
           <option value="ALL">ทุกสถานะฉลาก</option>
           <option value="draft">แบบร่าง (Draft)</option>
           <option value="pending_review">ยื่นคำขอแล้ว (รอเจ้าหน้าที่รับเรื่อง)</option>
           <option value="in_review">อยู่ระหว่างการพิจารณา</option>
-          <option value="revision_required">ส่งกลับแก้ไข</option>
+          <option value="revision_required">ส่งกลับแก้ไข (Revision Required)</option>
           <option value="approved">ผ่านการอนุมัติ (รอผู้ประกอบการเผยแพร่)</option>
           <option value="published">เผยแพร่แล้ว (Published)</option>
-          <option value="suspended">ถูกสั่งระงับชั่วคราว</option>
-          <option value="rejected">ไม่อนุมัติ</option>
+          <option value="suspended">ถูกสั่งระงับชั่วคราว (Suspended)</option>
+          <option value="rejected">ไม่อนุมัติ (Rejected)</option>
         </select>
       </div>
 
@@ -138,8 +195,8 @@ export const LabelListPage: React.FC = () => {
                       <p className="font-bold text-slate-900 line-clamp-1">{lbl.titleTh}</p>
                       <p className="text-[11px] text-slate-400 italic line-clamp-1">{lbl.titleEn}</p>
                       {lbl.revisionNotes && (
-                        <span className="inline-block text-[10px] text-amber-700 bg-amber-50 border border-amber-200 rounded px-1.5 py-0.5 mt-1 font-sans">
-                          จนท. ส่งกลับ: {lbl.revisionNotes}
+                        <span className="inline-block text-[10px] text-amber-800 bg-amber-50 border border-amber-200 rounded px-1.5 py-0.5 mt-1 font-sans">
+                          จนท. ส่งกลับ: {lbl.revisionNotes.slice(0, 45)}...
                         </span>
                       )}
                     </td>
@@ -171,6 +228,18 @@ export const LabelListPage: React.FC = () => {
                           </button>
                         )}
 
+                        {/* Create new version button for Published state */}
+                        {lbl.status === 'published' && (
+                          <button
+                            onClick={() => handleCreateNewVersion(lbl)}
+                            className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200 rounded-lg text-xs font-semibold transition flex items-center gap-1"
+                            title="สร้างเวอร์ชันใหม่ (v2.0) เมื่อมีการปรับปรุงสูตรหรือฉลาก"
+                          >
+                            <PlusCircle className="w-3 h-3 text-indigo-700" />
+                            <span>v{lbl.version + 1}.0</span>
+                          </button>
+                        )}
+
                         {/* Edit Button */}
                         <Link
                           to={`/entrepreneur/labels/${lbl.id}/edit`}
@@ -179,6 +248,24 @@ export const LabelListPage: React.FC = () => {
                         >
                           <FileEdit className="w-4 h-4" />
                         </Link>
+
+                        {/* Timeline & History Button */}
+                        <button
+                          onClick={() => setTimelineLabel(lbl)}
+                          className="p-1.5 text-slate-500 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition"
+                          title="ดูประวัติการดำเนินงาน (Timeline)"
+                        >
+                          <Clock className="w-4 h-4" />
+                        </button>
+
+                        {/* Version Diff Button */}
+                        <button
+                          onClick={() => setDiffLabel(lbl)}
+                          className="p-1.5 text-slate-500 hover:text-indigo-900 hover:bg-indigo-50 rounded-lg transition"
+                          title="เปรียบเทียบเวอร์ชัน (Version Diff)"
+                        >
+                          <GitCompare className="w-4 h-4" />
+                        </button>
 
                         {/* QR Code button */}
                         {prod && (
@@ -223,6 +310,34 @@ export const LabelListPage: React.FC = () => {
           message={`ผลิตภัณฑ์ "${labelToPublish.titleTh}" ผ่านการอนุมัติเนื้อหาจากเจ้าหน้าที่ อย. แล้ว การกดเผยแพร่จะทำให้ QR Code บนบรรจุภัณฑ์มีผลใช้งานจริง และประชาชนสามารถสแกนตรวจสอบได้ทันที`}
           confirmText="เผยแพร่สู่สาธารณะ"
           variant="success"
+        />
+      )}
+
+      {/* Timeline Modal */}
+      {timelineLabel && (
+        <Modal
+          isOpen={!!timelineLabel}
+          onClose={() => setTimelineLabel(null)}
+          title="ประวัติและสถานะการดำเนินงานคำขอ (Workflow Timeline)"
+          subtitle={`คำขอฉลาก: ${timelineLabel.titleTh}`}
+          maxWidth="2xl"
+        >
+          <div className="py-2">
+            <TimelineView
+              events={storage.getTimelineForLabel(timelineLabel.id)}
+              currentVersion={timelineLabel.version}
+            />
+          </div>
+        </Modal>
+      )}
+
+      {/* Version Diff Modal */}
+      {diffLabel && (
+        <VersionDiffModal
+          isOpen={!!diffLabel}
+          onClose={() => setDiffLabel(null)}
+          currentLabel={diffLabel}
+          versions={storage.getLabelVersions(diffLabel.id)}
         />
       )}
 

@@ -29,25 +29,41 @@ export type LabelStatus =
   | 'suspended'          // ถูกสั่งระงับชั่วคราว
   | 'rejected';          // ไม่อนุมัติ
 
+export interface NutritionFactItem {
+  name: string;
+  amount: string;
+  percentDailyValue: string;
+}
+
+export interface FoodSpecifics {
+  servingSize: string;
+  servingsPerContainer: string;
+  totalEnergy: string;
+  energyFromFat: string;
+  ingredientsWithPercent: string;
+  allergenInfo: string;
+  netWeight: string;
+  nutrients: NutritionFactItem[];
+}
+
 export interface NutritionFact {
   servingSize: string;
   servingsPerContainer: string;
   totalEnergy: string;
   energyFromFat: string;
-  nutrients: Array<{
-    name: string;
-    amount: string;
-    percentDailyValue: string;
-  }>;
+  nutrients: NutritionFactItem[];
 }
 
 export interface DrugSpecifics {
   genericName: string;
   dosageForm: string;
   strength: string;
+  classification?: string; // ยาสามัญประจำบ้าน / ยาอันตราย / ยาควบคุมพิเศษ
+  activeIngredients?: string; // ตัวยาสำคัญและความแรง
   indications: string;
   contraindications: string;
   dosageAndAdministration: string;
+  adverseReactions?: string; // อาการไม่พึงประสงค์
   storageConditions: string;
   leafletPdfUrl: string;
 }
@@ -60,6 +76,44 @@ export interface CosmeticSpecifics {
   batchNumber: string;
   mfgDate: string;
   expDate: string;
+  notificationNumber?: string;
+}
+
+export interface SystemNotification {
+  id: string;
+  userId?: string;
+  title: string;
+  message: string;
+  type: 'info' | 'success' | 'warning' | 'error';
+  link?: string;
+  read: boolean;
+  createdAt: string;
+}
+
+export interface LabelTimelineEvent {
+  id: string;
+  labelId: string;
+  version: number;
+  timestamp: string;
+  actorName: string;
+  actorRole: UserRole;
+  action: string;
+  status: LabelStatus;
+  notes?: string;
+}
+
+export interface DigitalLabelVersionRecord {
+  id: string;
+  labelId: string;
+  version: number;
+  titleTh: string;
+  titleEn: string;
+  status: LabelStatus;
+  snapshot: DigitalLabel;
+  changeLog?: string;
+  changedByName: string;
+  changedByRole: UserRole;
+  createdAt: string;
 }
 
 export interface LabelDocument {
@@ -83,6 +137,7 @@ export interface DigitalLabel {
   imageUrl: string;
   additionalImages?: string[];
   nutritionFacts?: NutritionFact;
+  foodDetails?: FoodSpecifics;
   drugDetails?: DrugSpecifics;
   cosmeticDetails?: CosmeticSpecifics;
   generalWarningTh: string;
@@ -96,10 +151,14 @@ export interface DigitalLabel {
   createdAt: string;
   updatedAt: string;
   submittedAt?: string;
+  submittedByName?: string;
+  submittedByRole?: string;
   approvedAt?: string;
   publishedAt?: string;
   suspendedReason?: string;
   revisionNotes?: string;
+  versionChangeReason?: string;
+  previousVersionId?: string;
   currentOfficerId?: string;
   currentOfficerName?: string;
 }

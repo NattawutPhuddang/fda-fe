@@ -4,6 +4,7 @@ import { useToast } from '../../context/ToastContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogOut, RotateCcw, User, Shield, Bell, Menu, ExternalLink } from 'lucide-react';
 import { ConfirmDialog } from '../common/ConfirmDialog';
+import { NotificationPopover } from '../common/NotificationPopover';
 
 interface TopbarProps {
   onToggleSidebar: () => void;
@@ -102,6 +103,9 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
           <RotateCcw className="w-3 h-3 text-slate-500" />
           <span className="hidden sm:inline text-xs">รีเซ็ตข้อมูลตัวอย่าง</span>
         </button>
+
+        {/* Notifications Popover */}
+        <NotificationPopover />
 
         <div className="h-5 w-px bg-slate-200" />
 

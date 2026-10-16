@@ -15,11 +15,15 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(() => storage.getCurrentUser());
+  const [currentUser, setCurrentUser] = useState<User | null>(() => {
+    return storage.getCurrentUser() || storage.getUsers().find(u => u.role === 'entrepreneur') || null;
+  });
 
   useEffect(() => {
-    // Sync current user state
-    const user = storage.getCurrentUser();
+    const user = storage.getCurrentUser() || storage.getUsers().find(u => u.role === 'entrepreneur') || null;
+    if (user && !storage.getCurrentUser()) {
+      storage.setCurrentUser(user);
+    }
     setCurrentUser(user);
   }, []);
 

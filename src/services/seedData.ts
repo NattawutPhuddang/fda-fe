@@ -1,4 +1,16 @@
-import { Product, DigitalLabel, User, Representative, IntegrationStatus, SystemConfig, AuditLog, ReviewChecklistItem } from './types';
+import { 
+  Product, 
+  DigitalLabel, 
+  User, 
+  Representative, 
+  IntegrationStatus, 
+  SystemConfig, 
+  AuditLog, 
+  ReviewChecklistItem,
+  SystemNotification,
+  LabelTimelineEvent,
+  DigitalLabelVersionRecord
+} from './types';
 
 export const INITIAL_USERS: User[] = [
   {
@@ -556,3 +568,145 @@ export const INITIAL_AUDIT_LOGS: AuditLog[] = [
     details: 'มีคำสั่งระงับการเผยแพร่ฉลาก ครีมบำรุงผิวหน้า ไวท์เทนนิ่ง ออร่า โกลว์ สกิน ตามคำสั่งด่วน อย.'
   }
 ];
+
+export const INITIAL_NOTIFICATIONS: SystemNotification[] = [
+  {
+    id: 'notif-001',
+    userId: 'usr-entrepreneur-01',
+    title: 'คำขอฉลากถูกส่งกลับแก้ไข (Revision Required)',
+    message: 'เจ้าหน้าที่ อย. ได้ตรวจพิจารณาคำขอฉลาก "น้ำมันปลา โอเมก้า 3" และมีข้อสังเกตให้ปรับปรุงข้อความโฆษณาสรรพคุณ',
+    type: 'warning',
+    link: '/entrepreneur/labels/lbl-004/edit',
+    read: false,
+    createdAt: '2026-10-15T13:30:00Z'
+  },
+  {
+    id: 'notif-002',
+    userId: 'usr-entrepreneur-01',
+    title: 'เจ้าหน้าที่รับเรื่องคำขอแล้ว (In Review)',
+    message: 'ภญ. วรรณภา สิริกุล ได้รับเรื่องคำขอฉลาก "ยาเม็ดพาราเซตามอล 500 มก." เข้าสู่ขั้นตอนตรวจพิจารณาแล้ว',
+    type: 'info',
+    link: '/entrepreneur/labels/lbl-002/edit',
+    read: false,
+    createdAt: '2026-10-15T11:35:00Z'
+  },
+  {
+    id: 'notif-003',
+    userId: 'usr-entrepreneur-01',
+    title: 'คำขอฉลากได้รับการอนุมัติ (Approved)',
+    message: 'ฉลาก "เครื่องดื่มรังนกแท้สำเร็จรูป ตรา เฮลท์โกลด์" ผ่านการตรวจสอบรับรองจาก อย. แล้ว พร้อมเผยแพร่',
+    type: 'success',
+    link: '/entrepreneur/labels',
+    read: true,
+    createdAt: '2026-09-02T16:00:00Z'
+  },
+  {
+    id: 'notif-004',
+    userId: 'usr-entrepreneur-01',
+    title: 'แจ้งเตือนคำสั่งระงับฉลาก (Suspended)',
+    message: 'คำเตือน: อย. มีคำสั่งระงับฉลาก "ครีมบำรุงผิวหน้า ไวท์เทนนิ่ง ออร่า" ชั่วคราวเนื่องจากพบสารปนเปื้อน',
+    type: 'error',
+    link: '/entrepreneur/labels',
+    read: true,
+    createdAt: '2026-10-01T15:05:00Z'
+  }
+];
+
+export const INITIAL_TIMELINE_EVENTS: LabelTimelineEvent[] = [
+  // Events for lbl-001 (published)
+  {
+    id: 'tl-101',
+    labelId: 'lbl-001',
+    version: 1,
+    timestamp: '2026-08-20T10:00:00Z',
+    actorName: 'นายสมศักดิ์ วัฒนกิจโกศล',
+    actorRole: 'entrepreneur',
+    action: 'SUBMIT_REQUEST',
+    status: 'pending_review',
+    notes: 'ยื่นคำขอฉลากดิจิทัลเครื่องดื่มรังนกแท้ พร้อมเอกสารผลวิเคราะห์โภชนาการ'
+  },
+  {
+    id: 'tl-102',
+    labelId: 'lbl-001',
+    version: 1,
+    timestamp: '2026-08-22T09:15:00Z',
+    actorName: 'ภญ. วรรณภา สิริกุล',
+    actorRole: 'officer',
+    action: 'CLAIM_REQUEST',
+    status: 'in_review',
+    notes: 'เจ้าหน้าที่ อย. รับเรื่องเข้าสู่กระบวนการตรวจพิจารณาตามเกณฑ์มาตรฐาน'
+  },
+  {
+    id: 'tl-103',
+    labelId: 'lbl-001',
+    version: 1,
+    timestamp: '2026-09-02T16:00:00Z',
+    actorName: 'ภญ. วรรณภา สิริกุล',
+    actorRole: 'officer',
+    action: 'APPROVE',
+    status: 'approved',
+    notes: 'ผ่านการพิจารณาตรวจสอบครบทุกข้อตามเกณฑ์ อย. อนุญาตให้ผู้ประกอบการเผยแพร่ฉลากได้'
+  },
+  {
+    id: 'tl-104',
+    labelId: 'lbl-001',
+    version: 1,
+    timestamp: '2026-09-05T14:30:00Z',
+    actorName: 'นายสมศักดิ์ วัฒนกิจโกศล',
+    actorRole: 'entrepreneur',
+    action: 'PUBLISH',
+    status: 'published',
+    notes: 'ผู้ประกอบการกดเผยแพร่ฉลากสู่สาธารณะ เปิดให้ประชาชนสแกน QR Code ตรวจสอบได้จริง'
+  },
+  // Events for lbl-004 (revision required)
+  {
+    id: 'tl-401',
+    labelId: 'lbl-004',
+    version: 1,
+    timestamp: '2026-10-10T14:00:00Z',
+    actorName: 'นายสมศักดิ์ วัฒนกิจโกศล',
+    actorRole: 'entrepreneur',
+    action: 'SUBMIT_REQUEST',
+    status: 'pending_review',
+    notes: 'ยื่นคำขอฉลากดิจิทัลสำหรับผลิตภัณฑ์เสริมอาหารน้ำมันปลา'
+  },
+  {
+    id: 'tl-402',
+    labelId: 'lbl-004',
+    version: 1,
+    timestamp: '2026-10-12T10:30:00Z',
+    actorName: 'ภญ. วรรณภา สิริกุล',
+    actorRole: 'officer',
+    action: 'CLAIM_REQUEST',
+    status: 'in_review',
+    notes: 'เจ้าหน้าที่ อย. รับเรื่องตรวจสอบ'
+  },
+  {
+    id: 'tl-403',
+    labelId: 'lbl-004',
+    version: 1,
+    timestamp: '2026-10-15T13:30:00Z',
+    actorName: 'ภญ. วรรณภา สิริกุล',
+    actorRole: 'officer',
+    action: 'REQUEST_REVISION',
+    status: 'revision_required',
+    notes: 'ตรวจพบข้อความโฆษณาสรรพคุณที่อาจทำให้เข้าใจผิดในคุณประโยชน์ (ป้องกันหลอดเลือดอุดตัน) ซึ่งไม่ได้รับอนุญาตในอาหารเสริม กรุณาแก้ไขข้อความให้ตรงกับทะเบียนสารบบ'
+  }
+];
+
+export const INITIAL_LABEL_VERSIONS: DigitalLabelVersionRecord[] = [
+  {
+    id: 'ver-001-v1',
+    labelId: 'lbl-001',
+    version: 1,
+    titleTh: 'เครื่องดื่มรังนกแท้สำเร็จรูป ผสมโสมสกัด ตรา เฮลท์โกลด์ (ขวด 70 มล.)',
+    titleEn: 'HealthGold Instant Bird\'s Nest Beverage with Ginseng Extract (70 ml Bottle)',
+    status: 'published',
+    snapshot: INITIAL_LABELS[0],
+    changeLog: 'อนุมัติและเผยแพร่ฉลากดิจิทัลเวอร์ชันแรก (v1.0) อย่างเป็นทางการ',
+    changedByName: 'นายสมศักดิ์ วัฒนกิจโกศล',
+    changedByRole: 'entrepreneur',
+    createdAt: '2026-09-05T14:30:00Z'
+  }
+];
+

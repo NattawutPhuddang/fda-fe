@@ -67,19 +67,31 @@ export const QRCodeManagerPage: React.FC = () => {
         {filtered.map(product => {
           const label = storage.getLabelByProductId(product.id);
           const isPublished = label?.status === 'published';
+          const isSuspended = label?.status === 'suspended' || product.registrationStatus === 'suspended';
 
           return (
             <div
               key={product.id}
               className={`bg-white rounded-2xl border p-5 shadow-xs transition hover:shadow-md flex flex-col justify-between ${
-                isPublished ? 'border-slate-200 hover:border-slate-400' : 'border-slate-200 bg-slate-50/50'
+                isSuspended
+                  ? 'border-red-300 bg-red-50/20'
+                  : isPublished
+                  ? 'border-slate-200 hover:border-slate-400'
+                  : 'border-slate-200 bg-slate-50/50'
               }`}
             >
               <div>
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <span className="text-[11px] font-mono text-slate-800 font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-                    {product.regNumber}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-mono text-slate-800 font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                      {product.regNumber}
+                    </span>
+                    {label && (
+                      <span className="text-[10px] font-mono bg-blue-100 text-blue-900 font-bold px-1.5 py-0.5 rounded">
+                        v{label.version}.0
+                      </span>
+                    )}
+                  </div>
                   <StatusBadge status={label?.status || product.activeLabelStatus || 'draft'} size="sm" />
                 </div>
 
@@ -92,14 +104,21 @@ export const QRCodeManagerPage: React.FC = () => {
                     <span className="font-mono text-slate-700 text-[11px]">/verify/{product.newcode.substring(0, 16)}...</span>
                   </div>
                   <div className="w-12 h-12 bg-white rounded-lg border border-slate-200 p-1 flex items-center justify-center flex-shrink-0">
-                    <QrCode className="w-8 h-8 text-blue-950" />
+                    <QrCode className={`w-8 h-8 ${isSuspended ? 'text-red-700' : 'text-blue-950'}`} />
                   </div>
                 </div>
 
-                {!isPublished && (
-                  <p className="text-[11px] text-slate-500 mt-2 flex items-center gap-1">
-                    <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 text-slate-400" />
-                    <span>ยังไม่ได้รับอนุมัติเผยแพร่ หากพิมพ์ก่อนจะแสดงสถานะระงับ/รอตรวจ</span>
+                {isSuspended && (
+                  <p className="text-[11px] text-red-700 mt-2 flex items-center gap-1 font-medium bg-red-50 p-2 rounded-lg border border-red-200">
+                    <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 text-red-600" />
+                    <span>คำสั่งระงับ: เมื่อสแกน QR Code ประชาชนจะเห็นการแจ้งเตือนระงับทันที</span>
+                  </p>
+                )}
+
+                {!isPublished && !isSuspended && (
+                  <p className="text-[11px] text-amber-700 mt-2 flex items-center gap-1 font-medium bg-amber-50 p-2 rounded-lg border border-amber-200">
+                    <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 text-amber-600" />
+                    <span>ยังไม่ได้รับอนุมัติเผยแพร่ หากสแกนจะแสดงสถานะร่าง/รอการอนุมัติ</span>
                   </p>
                 )}
               </div>
@@ -112,7 +131,7 @@ export const QRCodeManagerPage: React.FC = () => {
                   className="text-xs text-slate-600 hover:text-blue-900 flex items-center gap-1 font-medium"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>ทดสอบสแกน</span>
+                  <span>ทดสอบสแกน (Live Scan)</span>
                 </a>
 
                 <button

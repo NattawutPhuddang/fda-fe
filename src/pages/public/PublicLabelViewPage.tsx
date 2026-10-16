@@ -327,6 +327,20 @@ export const PublicLabelViewPage: React.FC = () => {
                     ))}
                   </div>
                 </div>
+
+                {label.foodDetails?.ingredientsWithPercent && (
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+                    <strong className="text-slate-900 block mb-0.5">ส่วนประกอบสำคัญโดยประมาณ:</strong>
+                    <p className="text-slate-700">{label.foodDetails.ingredientsWithPercent}</p>
+                  </div>
+                )}
+
+                {label.foodDetails?.allergenInfo && (
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-950">
+                    <strong className="text-amber-900 block mb-0.5">ข้อมูลสำหรับผู้แพ้อาหาร:</strong>
+                    <p>{label.foodDetails.allergenInfo}</p>
+                  </div>
+                )}
               </div>
             )}
 
